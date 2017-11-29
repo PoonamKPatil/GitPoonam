@@ -16,52 +16,105 @@
 }
 
 </style>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $('#country').on('change',function(){
-     
-        var countryID = $(this).val();
-        if(countryID){
-            $.ajax({
-                type:'POST',
-                url:'registrationForm.php',
-                data:'country_id='+countryID,
-                success:function(html){
-                    $('#state').html(html);
-                    $('#city').html('<option value="">Select state first</option>'); 
-                   
-                }
-
-            });   
-        }else{
-            $('#state').html('<option value="">Select country first</option>');
-            $('#city').html('<option value="">Select state first</option>'); 
-        }
-    });
-    
-    $('#state').on('change',function(){
-        var stateID = $(this).val();
-        if(stateID){
-            $.ajax({
-                type:'POST',
-                url:'registrationForm.php',
-                data:'state_id='+stateID,
-                success:function(html){
-                    $('#city').html(html);
-                }
-            }); 
-        }else{
-            $('#city').html('<option value="">Select state first</option>'); 
-        }
-    });
-});
-</script>
 </head>
 
 <?php
-include("form_validation.php");
+$nameErr = $emailErr = $genderErr = "";
+$name = $email = $gender = $comment = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["name"])) {
+    $nameErr = "Name cannot be empty";
+} 
+else {
+    $name = $_POST["name"];
+    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+        $nameErr = "Only letters and white space allowed"; 
+    }
+  
+}
+if (empty($_POST["email"])) {
+    $emailErr = "Email is required";
+} 
+else {
+    $email=$_POST["email"];
+    if (!preg_match("/^[a-zA-Z]*@gmail.com$/",$email)) {
+        $emailErr = "Provide valid emailId"; 
+    }
+    
+}
+if (empty($_POST["password"])) {
+    $passwordErr = "Please give password";
+} 
+else {
+    $password = $_POST["password"];
+  
+}
+if (empty($_POST["confirmpassword"])) {
+    $confirmpasswordErr = "confirm your password";
+} 
+else {
+    $confirmpassword = $_POST["confirmpassword"];
+    if($confirmpassword!=$password) {
+        $confirmpasswordErr = "Incorrect,Please type again";
+    }
+  
+}
+if (empty($_POST["contact"])) {
+    $contactErr= "Give your contact number";
+} 
+else {
+    $contact = $_POST["contact"];
+    if(!preg_match("/^[9|7|8][0-9]*$/",$contact)) {
+        $contactErr = "Enter valid mobile number";
+    }
+  
+}
+if(empty($_POST["code"])) {
+    $codeErr = "Enter country code";
+}
+else if(!preg_match("/^[+][0-9]{2}$/",$_POST["code"])) {
+    $codeErr = "Enter valid country number";
+}  
+else {
+    $code=$_POST["code"];
+}
+if (empty($_POST["gender"])) {
+    $genderErr = "Gender is required";
+}
+else {
+    $gender = $_POST["gender"];
+}
+if (empty($_POST["comment"])) {
+    $comment = "";
+}
+else {
+    $comment = $_POST["comment"];
+}
+if(empty($_POST["courses"])) {
+    $courseErr="Please select course";
+}
+else {
+    $courses=$_POST["courses"];
+}
+if(empty($_POST["country"])) {
+    $countryErr="Please select course";
+}
+else {
+    $country=$_POST["country"];
+}
+if(empty($_POST["hobbie"])) {
+    $hobbiesErr="Please select hobbie";
+}
+else {
+    $Hobbies=$_POST["hobbie"];
+}
+if(empty($_POST["language"])) {
+    $languageErr="Please select language";
+}
+
+}
+
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = 'compass';
@@ -77,7 +130,7 @@ $hobby_query = mysqli_query($connect,"SELECT * FROM hobbies");
 $course_query = mysqli_query($connect,"SELECT * FROM courses");
 $language_query= mysqli_query($connect,"SELECT * FROM languages");
 $country_query=mysqli_query($connect,"SELECT * FROM countries");
-   
+    
 ?>
 
 <body>
@@ -95,7 +148,7 @@ $country_query=mysqli_query($connect,"SELECT * FROM countries");
 <span class="error">*<?php echo $passwordErr?></span>
 <br><br>
 
-<lable>Confirm Password:</lable> <input type="password"  maxlength="8" name="confirmpassword"
+<lable>confirm Password:</lable> <input type="password"  maxlength="8" name="confirmpassword"
 value="">
 <span class="error">*<?php echo $confirmpasswordErr?></span>
 <br><br>
@@ -107,7 +160,7 @@ value="">
 Comment: <textarea name="comment" rows="5" cols="40" maxlength="255"><?php echo $comment;?></textarea>
 <br><br>
 
-<lable>Contact Number:</lable> 
+<lable>contact Number:</lable> 
 <input type="text" placeholder="+91" name="code" size="4px" maxlength="4"  value="<?php echo $code;?>">
 <input type="text"  maxlength="10" name="contact" value="<?php echo $contact;?>">
 <span class="error">*</span>
@@ -120,10 +173,10 @@ Comment: <textarea name="comment" rows="5" cols="40" maxlength="255"><?php echo 
     <option value="">Select course</option>
     <?php
     WHILE ($rows = mysqli_fetch_array($course_query)){?>
-    <option name="course_id" value="<?php echo $rows['course_name'] ?>" <?php  if(isset($courses) && $courses==$rows['course_name'] )
+    <option value="<?php echo $rows['course_name'] ?>" <?php  if(isset($courses) && $courses==$rows['course_name'] )
     echo "selected"?>><?php echo $rows['course_name'] ?>
     </option>
-    <?php 
+    <?php
     }?>
 </select>
 
@@ -134,14 +187,14 @@ Comment: <textarea name="comment" rows="5" cols="40" maxlength="255"><?php echo 
 <?php
     WHILE ($rows = mysqli_fetch_array($hobby_query)){?>
     <option value="<?php echo $rows['hobbie_name'] ?>" 
-    <?php if(!empty($_POST["hobbie"])){
+     <?php if(!empty($_POST["hobbie"])){
                $hobbie=$_POST["hobbie"];
                if (in_array($rows['hobbie_name'], $hobbie)) {
                    ?>selected="selected"<?php 
                }
             }?>
     >
-    <?php echo $rows["hobbie_name"] ?>
+      <?php echo $rows["hobbie_name"] ?>
     </option>
   <?php
     } ?>
@@ -155,7 +208,7 @@ Comment: <textarea name="comment" rows="5" cols="40" maxlength="255"><?php echo 
     <?php
     WHILE ($rows = mysqli_fetch_array($country_query)){?>
     <option value="<?php echo $rows['country_name'] ?>" <?php  if(isset($country) && $country==$rows['country_name'])
-    echo "selected"?>><?php echo $rows['country_name'];?>
+    echo "selected"?>><?php echo $rows['country_name'] ?>
     </option>
   <?php
     } ?>
@@ -164,45 +217,16 @@ Comment: <textarea name="comment" rows="5" cols="40" maxlength="255"><?php echo 
 <span class="error">*</span>
 <br><br>
 
+
 <label>State:</label>
 <select name="state" id="state">
-<?php
-
-if(isset($_POST["country_id"]) && !empty($_POST["country_id"])){
-    //Get all state data
-    $state_query = mysqli_query($connect,"SELECT * FROM states WHERE country_id = ".$_POST['country_id']);
-    echo '<option value="">Select state</option>';
-    while($row = mysqli_fetch_array($state_query)){ 
-        print_r($row);
-        echo '<option value="'.$row['state_id'].'">'.$row['state_name'].'</option>';
-    }
-   
-}
-?>
 </select>
-<br><br>
+
 <label>City:</label>
 <select name="city" id="city">
-<?php
-if(isset($_POST["state_id"]) && !empty($_POST["state_id"])){
-    //Get all city data
-    $query = $db->query("SELECT * FROM cities WHERE state_id = ".$_POST['state_id']);
-    
-    //Count total number of rows
-    $rowCount = $query->num_rows;
-    
-    //Display cities list
-    if($rowCount > 0){
-        echo '<option value="">Select city</option>';
-        while($row = $query->fetch_assoc()){ 
-            echo '<option value="'.$row['city_id'].'">'.$row['city_name'].'</option>';
-        }
-    }else{
-        echo '<option value="">City not available</option>';
-    }
-}
-?>
 </select>
+
+<span class="error">*</span>
 <br><br>
 
 <label>Select Gender:</label><input type="radio" name="gender"
@@ -218,7 +242,8 @@ if(isset($_POST["state_id"]) && !empty($_POST["state_id"])){
         <input type="checkbox" name="language[]" value="<?php echo $rows['language_name']?>"
         <?php if(!empty($_POST["language"])) {
             $language=$_POST["language"];
-            if (in_array($rows['language_name'], $language)) {
+            if (in_array($rows['language_name'], $language)) 
+            {
                 ?>checked="checked"<?php 
             }
         }?>
@@ -232,7 +257,6 @@ if(isset($_POST["state_id"]) && !empty($_POST["state_id"])){
 
 
 <?php
-
 if(!empty($language) && empty($nameErr) && empty($genderErr) && empty($emailErr) && empty($courseErr) && empty($hobbiesErr) && empty($languageErr)  && empty($contactErr) && empty($codeErr) && empty($countryErr)) {
 
     echo "<h2><b style=\"color: green\"> Succesfully registered !!.Your details have been saved.</b></h2>";
@@ -301,28 +325,7 @@ else {
   echo "</ul>";
 
 }
-if(isset($_POST['submit']))
-{
 
-   /* $name=$_POST['name'];
-    $password=$_POST['password'];
-    $email=$_POST['email'];
-    $gender=$_POST['gender'];*/
-      $course_id=$_POST['course_id'];
-      echo $course_id;
-    
-    $sql = "INSERT INTO users (name, password, email,gender,comment,phone_number,created_date,course_id)
-    VALUES ('$name','$password','$email','$gender','$comment','$contact',now(),'$course_id')";
-
-    if(mysqli_query($connect,$sql))
-    {
-      echo "succesfully inserted";
-    }
-    else
-    {
-        echo "error while inserting data ";
-    }
-}
 ?>
 </body>
 </html>

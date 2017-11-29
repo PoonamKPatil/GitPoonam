@@ -30,7 +30,7 @@ if(isset($_POST['submit'])) {
 
 
 
-$nameErr = $emailErr = $genderErr = "";
+$nameERR = $emailErr = $genderErr = "";
 $name = $email = $gender = $comment = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -148,6 +148,23 @@ if(empty($_POST["language"]))
 $course=array("Java","C","PHP","C#");
 $hobbies=array("Drawing","Dancing","Volleyball","Cooking","Painting");
 $languages=array("English","Hindi","Spanish","French");
+
+
+
+$servername = "localhost";
+$username = "root";
+$password = "compass";
+#dbname='user_db';
+
+// Create connection
+$conn = new mysqli($servername, $username, $password,$dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully";
+
 
 ?>
  <h3>Registration form </h3>
