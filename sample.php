@@ -1,35 +1,31 @@
 <?php
-//echo print_r("poonam");
+/*$a[]=1;
+$a['kiran']=2;
+$a[]=3;
+$a[4]=4;
+$a[]=5;
+echo "<pre>";
+print_r(array_keys($a));
 
-//print echo "poonam";
-/*
-$var1=92;
-$var2=13;
-echo $var1.$var2."<br>";
-print_r($var1.$var2."<br>");
+echo "<pre>";
+print_r($a);*/
 
 
-echo $var1,$var2,"<br>";*/
-//print_r($var1,$var2);
 
-$myfile = fopen("test.txt", "r") or die("Unable to open file!");
-
-if(file_exists("test.txt"))
-{  
-	echo "file type is ".filetype("test.txt")."<br>";
-	echo "file size ".filesize("test.txt")."<br>";
-	echo "file permission ".fileperms("test.txt")."<br>";
-    while(!feof($myfile))
-{
-echo fgets($myfile)."<br>";
+function inverse($x) {
+ if (!$x) {
+ throw new Exception('Division by zero.');
+ }
+ return 1/$x;
 }
+
+try {
+ //echo inverse(5) . "\n";
+ echo inverse(0) . "\n";
+} catch (Exception $e) {
+ echo 'Caught exception: ', $e->getMessage(), "\n";
+ echo "<pre>";
+ print_r(get_class_methods($e));
 }
-else {
-    echo "No such file ";
-}
-fclose($myfile);
-
-
-
 
 ?>

@@ -19,13 +19,16 @@ if(isset($_SESSION['username'])) {
   <a href="logout.php">Logout</a>
 </div>
 <?php
-	echo "<h3 style=\"color:#4CAF50\";>Users are:</h3>";
+    
+	  echo "<h3 style=\"color:#4CAF50\";>Users are:</h3>";
     $qry="select * from usersInformation";
     $result=mysqli_query($connect,$qry) or die($qry."<br/><br/>".mysqli_error($connect));
     while($rows = mysqli_fetch_array($result)) {
-    	echo $rows['uid'].")".$rows['username']."<br>"."EmailId:-".$rows['email']."<br><br>";
+        echo $rows['uid'].")".$rows['username']."<br>"."EmailId:-".$rows['email']."<br><br>";
+      
     }
 }
+
 else {
     header("location:login.php");
 }

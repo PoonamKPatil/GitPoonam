@@ -34,7 +34,7 @@ class b extends welcomeClass
 		# code...
 		echo "B- Constructor get Called";
 		parent::__construct();
-echo "<br>";
+        echo "<br>";
 		echo s;
 	} 
 }
