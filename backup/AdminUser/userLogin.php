@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     	$password=$_POST['password'];
     } 
     if(empty($nameErr) && empty($emailErr) && empty($contactErr) && empty($passwordErr) && empty($confirmpasswordErr)) {   
-        $qry="select username,password,role_id from usersInformation where username = '".$name."'";
+        $qry="select username,password,role_id,status from usersInformation where username = '".$name."'";
         $userResult= $dbClass->runQry($qry) or die($qry."<br/><br/>".mysqli_error($connect));
         $rows = mysqli_fetch_array($userResult);
    // echo $rows['password']."<br>";
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($rows['role_id']==1) {
             $error="You are not user<br>";
         }
-        else if ($rows['password']==md5($password)) {
+        else if ($rows['password']==md5($password) && $rows['status']==1) {
     	    $_SESSION['username']=$name;
             header("location:userdashboard.php");
         }

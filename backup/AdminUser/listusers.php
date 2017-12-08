@@ -5,23 +5,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>view profile</title>
+<title>List users</title>
 <link rel = "stylesheet"
    type = "text/css"
    href = "style.css" />
 </head>
 <body>
 <?php
-include("parentclass.php");
+include("adminclass.php");
+
 echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
 if(isset($_SESSION['username'])) {
 ?><div class="nav">
+  <a href="listusers.php">List Users</a>
+  <a href="updateuser.php">Update User</a>
+  <a href="adminchangepwd.php">Change password</a>
   <a href="logout.php">Logout</a>
 </div>
 <?php
-	echo "<h3 style=\"color:#4CAF50\";>Your Details:</h3>";
-    $adminObj = new Person();
-    $adminObj->viewProfile($_SESSION['username']);
+	echo "<h3 style=\"color:#4CAF50\";>Users are:</h3>";
+    $adminObj = new Admin();
+    $adminObj->listUsers();
 }
 else {
     header("location:adminLogin.php");

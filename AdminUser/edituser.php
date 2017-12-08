@@ -13,27 +13,32 @@
 <body>
 <?php
 echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
-include("adminclass.php");
+include("userClass.php");
 
 if(isset($_SESSION['username'])) {
 ?><div class="nav">
   <a href="logout.php">Logout</a>
 </div>
+<?php
+$userObj = new Person();
+$user=$userObj->viewProfile($_SESSION['username']);
+?>
 <form method="POST" action="">
-Name:<input type="text" name="name" value="<?php echo $name?>"><span class=error>*<?php echo $nameErr ?></span><br><br>
-Email:<input type="text" name="email" value="<?php echo $email?>"><span class=error>*<?php echo $emailErr ?></span><br><br>
-Phone Number:<input type="text" name="contact" value="<?php echo $contact?>"><span class=error>*<?php echo $contactErr ?></span><br><br>
+Name:<input type="text" name="name" value="<?php echo $user['username']?>"><br><br>
+Email:<input type="text" name="email" value="<?php echo $user['email']?>"><br><br>
+Phone Number:<input type="text" name="contact" value="<?php echo $user['contact']?>"><br><br>
 <input type="submit" value="submit" name="submit" class="submit">
 </form>
-
 <?php
-	 
-
-$adminObj = new Admin();
-$uid=$adminObj->getUserByname($_SESSION['username']);
+$userObj = new User();
+$uid=$userObj->getUserByname($_SESSION['username']);
 //echo $uid;
 if(isset($_POST['submit'])) {
-    $adminObj->editProfile($uid,$_POST['name'],$$_POST['email'],$_POST['contact']);
+   if($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact']))
+   {
+   	 echo "succesffuly updated";
+   }
+
 }
 
 }

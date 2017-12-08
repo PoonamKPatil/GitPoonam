@@ -21,21 +21,23 @@ class Admin extends Person {
     
     public function listUsers() {
         $dbClass = new DBcontroller();
-    	$qry="select * from usersInformation";
+    	$qry="select * from usersInformation where role_id=2";
         $result=$dbClass->runQry($qry);
+        $i=1;
         while($rows = mysqli_fetch_array($result)) {
-            echo $rows['uid'].")".$rows['username']."<br>"."EmailId:-".$rows['email']."<br><br>";
+            echo $i.")".$rows['username']."<br>"."EmailId:-".$rows['email']."<br><br>";
+            $i++;
       
         }
     }
     public function getAllUsers() {
         $arr=array();
         $dbClass = new DBcontroller();
-        $qry="select username from usersInformation where role_id=2";
+        $qry="select username,email,contact from usersInformation where role_id=2";
         $result=$dbClass->runQry($qry);
       
         while($rows = mysqli_fetch_array($result)) {
-          $arr[] = $rows['username'];
+          $arr[] = array($rows['username'],$rows['email'],$rows['contact']);
         }
         return $arr;
     }
