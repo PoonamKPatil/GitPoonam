@@ -29,7 +29,7 @@ if(isset($_SESSION['username'])) {
 <?php
 while ($user = mysqli_fetch_array($userarr)){?>
 <form method="POST" action="">
-Name:<input type="text" name="name" value="<?php echo $user['username']?>"><br><br>
+Name:<input type="text" name="name" maxlength=20 value="<?php echo $user['username']?>"><br><br>
 Email:<input type="text" name="email" value="<?php echo $user['email']?>"><br><br>
 Phone Number:<input type="text" name="contact" value="<?php echo $user['contact']?>"><br><br>
 <input type="submit" value="Save" name="submit" class="submit">

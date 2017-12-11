@@ -8,7 +8,7 @@
 <head><title>Dashbaord page</title>
 <link rel = "stylesheet"
    type = "text/css"
-   href = "style.css" />
+   href = "../style.css" />
 </head>
 <body>
 <?php 
