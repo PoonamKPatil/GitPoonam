@@ -16,6 +16,9 @@ include("parentclass.php");
 echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
 if(isset($_SESSION['username'])) {
 ?><div class="nav">
+  <a href="viewprofile.php">View Profile</a>
+  <a href="edituser.php">Edit Profile</a>
+  <a href="userChangePwd.php">Change password</a>
   <a href="logout.php">Logout</a>
 </div>
 <?php

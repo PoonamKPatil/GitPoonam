@@ -16,8 +16,8 @@ if(isset($_SESSION['username'])) {
 ?>
 <div class="nav">
   <a class="active" href="#home">Home</a>
-  <a href="listusers.php">List Users</a>
-  <a href="update.php">Update User</a>
+  <a href="updateuser.php">List Users</a>
+  <a href="adminchangepwd.php">Change password</a>
   <a href="logout.php">Logout</a>
 </div>
 <?php }

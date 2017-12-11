@@ -59,9 +59,17 @@ class Person {
 
 
     }
+    public function getUserByid($uid) {
+        $dbClass = new DBcontroller();
+        $qry="select * from usersInformation where uid='".$uid."'";
+        $result=$dbClass->runQry($qry);
+      
+       
+        return $result;
+    }
     public function editProfile($uid,$name=null,$email=null,$contact=null) {
         $dbClass = new DBcontroller();
-       
+        
         if($name==null && $email!=null && $contact!=null)
         {
             $update_users_query = "UPDATE usersInformation set email='$email' , contact=$contact  where uid=".$uid."";
@@ -80,11 +88,14 @@ class Person {
         }
         else if($contact==null && $name==null && $email!=null)
         {
+
             $update_users_query = "UPDATE usersInformation set email='$email' where uid=".$uid."";
         }
         else 
         {
-            $update_users_query = "UPDATE usersInformation set username='$name', email='$email', contact=$contact where uid=".$uid."";
+            $update_users_query = "UPDATE usersInformation set username='$name', email='$email',contact=$contact where uid=".$uid."";
+           
+
         }
     
        
@@ -108,8 +119,8 @@ class Person {
         $contact=$person->phoneNumber;
         $roleid=$person->roleId;
 
-    	$insert_users_query = "INSERT INTO usersInformation (username, password, email,contact,role_id)
-        VALUES ('$name','$pwd','$email','$contact',$roleid)";
+    	$insert_users_query = "INSERT INTO usersInformation (username, password, email,contact,role_id,status)
+        VALUES ('$name','$pwd','$email','$contact',$roleid,1)";
         //echo $insert_users_query;
         
         if($dbClass->runQry($insert_users_query))
