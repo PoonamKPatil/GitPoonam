@@ -1,19 +1,3 @@
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["name"])) {
-        $nameErr = "Enter username";
-    } 
-    else {
-    	$name=$_POST['name'];
-    }
-    if(empty($_POST["password"])) {
-        $passwordErr="Enter password";
-    }
-    else {
-    	$password=$_POST['password'];
-    } 
- }
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,6 +29,7 @@ Password:<input type="password" name="password" value="<?php echo $password?>"><
 <input type="submit" name="login" value="LOGIN" class="submit">
 <a href="registerUser.php">Register Here</a>
 </span><br><br>
+<h2 class="error"><?php echo $error;?></h2>
 </form>
 </div>
 </body>

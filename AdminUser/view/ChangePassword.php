@@ -2,9 +2,6 @@
 <html>
 <head>
 <title>change password</title>
-<link rel = "stylesheet"
-   type = "text/css"
-   href = "style.css" />
 </head>
 <body>
 <form method="POST" action="">

@@ -3,29 +3,29 @@
     ob_start();
 ?>
 <?php
-include("../Model/DbClass.php");
-include("../view/AdminLoginPage.php"); 
-
-$dbClass = new DBcontroller();
+include("../Model/adminclass.php");
+include("../Model/valid.php");
+$adminObj=new Admin();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty($nameErr) && empty($emailErr) && empty($contactErr) && empty($passwordErr) && empty($confirmpasswordErr)) {
-        $qry="select username,password,role_id from usersInformation where username = '".$name."'";
-        $userResult= $dbClass->runQry($qry) or die($qry."<br/><br/>".mysqli_error($db->connect));
-        $rows = mysqli_fetch_array($userResult);
-        if($rows['role_id']==2) {
-            echo "You are not admin<br>";
+
+        $result=$adminObj->getUserByName($name);
+        
+        if($result['role_id']==USERROLEID) {
+            $error= "You are not admin<br>";
         }
-        else if ($rows['password']==md5($password)) {
+        else if ($result['password']==md5($password)) {
     	    $_SESSION['username']=$name;
             header("location:../view/admindashboard.php");
         }
         else {
-    	    echo "Invalid username or password<br>";
+    	    $error= "Invalid username or password<br>";
         }
     
     }
-   // echo $rows['username'];  
+   // echo $result['username'];  
 }
+include("../view/AdminLoginPage.php"); 
  ob_end_flush();   
 ?>

@@ -3,31 +3,29 @@
     ob_start();
 ?>
 <?php
-include("../Model/DbClass.php");
-include("../view/UserLoginPage.php"); 
-
-$dbClass = new DBcontroller();
+include("../Model/userClass.php");
+include("../Model/valid.php");
+$adminObj=new User();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(empty($nameErr) && empty($emailErr) && empty($contactErr) && empty($passwordErr) && empty($confirmpasswordErr)) {   
-        $qry="select username,password,role_id,status from usersInformation where username = '".$name."'";
-        $userResult= $dbClass->runQry($qry) or die($qry."<br/><br/>".mysqli_error($connect));
-        $rows = mysqli_fetch_array($userResult);
-  // echo $rows['password']."<br>";
-  // echo md5($password);
-        if($rows['role_id']==1) {
-            echo "You are not user<br>";
+    if(empty($nameErr) && empty($emailErr) && empty($contactErr) && empty($passwordErr) && empty($confirmpasswordErr)) {  
+
+       $result=$adminObj->getUserByName($name);
+       
+        if($result['role_id']==ADMINROLEID) {
+            $error= "You are not user<br>";
         }
-        else if ($rows['password']==md5($password) && $rows['status']==1) {
+        else if ($result['password']==md5($password) && $result['status']==ACTIVE) {
     	    $_SESSION['username']=$name;
             header("location:../view/userdashboard.php");
         }
         else {
-    	    echo "Invalid username or password<br>";
+    	    $error= "Invalid username or password<br>";
         }
     } 
-   // echo $rows['username'];   
+   // echo $result['username'];   
  ob_end_flush();  
 
 }
+include("../view/UserLoginPage.php"); 
 ?>

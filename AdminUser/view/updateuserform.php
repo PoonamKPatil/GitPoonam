@@ -11,7 +11,7 @@
 <th>Email</th>
 <th>Phone Number</th>
 </tr>
-<?php while ($userInfo = mysqli_fetch_array($result)) { 
+<?php foreach ($resultArr as $userInfo) { 
 ?>  
 <form method="post">
 <tr>

@@ -1,5 +1,6 @@
 <?php
 class DBcontroller {
+
 	public $dbhost;
     public $dbuser;
     public $dbpass;
@@ -12,6 +13,7 @@ class DBcontroller {
     	$this->connect=mysqli_connect($this->dbhost,$this->dbuser,$this->dbpass);
     	mysqli_select_db($this->connect,"loginTest_db");
     }
+    
     public function runQry($qry) {
        $result=mysqli_query($this->connect,$qry) or die(mysqli_error($this->connect));
        return $result;

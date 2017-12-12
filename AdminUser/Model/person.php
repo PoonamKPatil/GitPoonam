@@ -1,6 +1,12 @@
 <?php
 include("DbClass.php");
+ define("USERROLEID", 2);
+ define("ADMINROLEID", 1);
+ define("INACTIVE", 0);
+ define("ACTIVE", 1);
+
 class Person {
+
 	protected $name;
     protected $password;
     protected $email;
@@ -53,47 +59,65 @@ class Person {
         $this->name=$user['username'];
         $this->email=$user['email'];
         $this->phoneNumber=$user['contact'];
-
         
         return $user;
-
-
     }
-    public function getUserByid($uid) {
+
+    public function getUserIdByname($uname) {
+
         $dbClass = new DBcontroller();
-        $qry="select * from usersInformation where uid='".$uid."'";
-        $result=$dbClass->runQry($qry);
+        $useridQry="select uid from usersInformation where username='".$uname."'";
+
+        $result=$dbClass->runQry($useridQry);
       
+        while($rows = mysqli_fetch_array($result)) {
+          $userid = $rows['uid'];
+        }
        
-        return $result;
+        return $userid;
     }
+    public function getUserById($uid) {
+        
+        $dbClass = new DBcontroller();
+        $useridQry="select * from usersInformation where uid=".$uid."";
+
+        $result=$dbClass->runQry($useridQry);
+ 
+        return mysqli_fetch_array($result);
+    }
+
+    public function getUserByName($name) {
+
+        $dbClass = new DBcontroller();
+        $userqry="select username,password,role_id,status from usersInformation where username = '".$name."'";
+
+        $userResult= $dbClass->runQry($userqry) or die($userqry."<br/><br/>".mysqli_error($db->connect));
+        $rows = mysqli_fetch_array($userResult);
+      
+        return $rows;
+    }
+
     public function editProfile($uid,$name=null,$email=null,$contact=null) {
         
         $dbClass = new DBcontroller();
 
-        if($name)
-        {
+        if($name) {
             $subqry="username='$name',";
         }
-        if($email)
-        {
+        if($email) {
             $subqry.="email='$email',";
         }
-        if($contact)
-        {
+        if($contact) {
             $subqry.="contact=$contact";
         }
 
         $update_users_query = "UPDATE usersInformation set ".$subqry." where uid=".$uid."";
 
         if($dbClass->runQry($update_users_query)) {
-            
+       
             return true;
-
         }      
-           return false;
-        
-
+        return false;
     }
     public function insert(Person $person) {
         $dbClass = new DBcontroller();
@@ -108,16 +132,41 @@ class Person {
         VALUES ('$name','$pwd','$email','$contact',$roleid,1)";
         //echo $insert_users_query;
         
-        if($dbClass->runQry($insert_users_query))
-        {
+        if($dbClass->runQry($insert_users_query)) {
            return true;
-
         }
-        else
-        {
-          return false;
-        }
+       
+        return false;
+        
 
+    }
+    public function checkPassword($password)
+    {
+        
+         $dbClass = new DBcontroller();
+         $infoQry="select password from usersInformation where password='".$password."'";
+         
+         $result=$dbClass->runQry($infoQry);
+      
+         $rows = mysqli_fetch_array($result);
+           
+         if(!empty($rows['password'])) {
+            
+            return true;
+         }
+         
+         return false;
+    }
+    public function changePassword($uid,$password)
+    {
+         $dbClass = new DBcontroller();
+         $infoQry = "UPDATE usersInformation set password='$password' where uid=".$uid."";
+        
+         if($result=$dbClass->runQry($infoQry)) {
+            return true;
+         }
+         
+         return false;
     }
 
 
