@@ -29,14 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    // echo $password;
    // echo $rows['role_id'];
         if($rows['role_id']==2) {
-            $error="You are not admin<br>";
+            echo "You are not admin<br>";
         }
         else if ($rows['password']==md5($password)) {
     	    $_SESSION['username']=$name;
             header("location:../view/admindashboard.php");
         }
         else {
-    	    $error="Invalid username or password<br>";
+    	    echo "Invalid username or password<br>";
         }
     
     }

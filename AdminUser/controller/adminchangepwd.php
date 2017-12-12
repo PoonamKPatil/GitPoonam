@@ -12,16 +12,10 @@
 </head>
 <body>
 <?php
-echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
-include("adminclass.php");
-
+include("../Model/adminclass.php");
 if(isset($_SESSION['username'])) {
-?><div class="nav">
-  
-  <a href="updateuser.php">List Users</a>
-  <a href="adminchangepwd.php">Change password</a>
-  <a href="logout.php">Logout</a>
-</div>
+  include("../view/admindashboard.php");
+?>
 <form method="POST" action="">
 <br>
 Old password:<input type="password" name="oldpassword" value="<?php echo $user['password']?>"><br><br>
@@ -42,7 +36,7 @@ if(isset($_POST['submit']))
     {
     	$uid=$adminObj->getUserByname($_SESSION['username']);
     	$adminObj->changePassword($uid,md5($_POST['newpassword']));
-    	 header("location:adminLogin.php?msg=password changed successfully...login again!!");
+    	 header("location:../controller/adminLoginController.php?msg=password changed successfully...login again!!");
 
     }
     else

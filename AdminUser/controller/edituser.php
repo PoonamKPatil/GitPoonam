@@ -12,17 +12,11 @@
 </head>
 <body>
 <?php
-echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
-include("userClass.php");
+include("../Model/userClass.php");
 
 if(isset($_SESSION['username'])) {
-?><div class="nav">
-  <a href="viewprofile.php">View Profile</a>
-  <a href="edituser.php">Edit Profile</a>
-  <a href="userChangePwd.php">Change password</a>
-  <a href="logout.php">Logout</a>
-</div>
-<?php
+include("../view/userdashboard.php");
+
 $userObj = new Person();
 $user=$userObj->viewProfile($_SESSION['username']);
 ?>
@@ -40,6 +34,7 @@ $uid=$userObj->getUserByname($_SESSION['username']);
 if(isset($_POST['submit'])) {
    if($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact']))
    {
+   	 $_SESSION['username']=$_POST['name'];
    	 echo "succesffuly updated";
    }
 

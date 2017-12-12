@@ -8,18 +8,6 @@ include("../view/UserLoginPage.php");
 $dbClass = new DBcontroller();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["name"])) {
-        $nameErr = "Enter username";
-    } 
-    else {
-    	$name=$_POST['name'];
-    }
-    if(empty($_POST["password"])) {
-        $passwordErr="Enter password";
-    }
-    else {
-    	$password=$_POST['password'];
-    } 
     if(empty($nameErr) && empty($emailErr) && empty($contactErr) && empty($passwordErr) && empty($confirmpasswordErr)) {   
         $qry="select username,password,role_id,status from usersInformation where username = '".$name."'";
         $userResult= $dbClass->runQry($qry) or die($qry."<br/><br/>".mysqli_error($connect));
@@ -27,14 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    // echo $rows['password']."<br>";
    // echo $password;
         if($rows['role_id']==1) {
-            $error="You are not user<br>";
+            echo "You are not user<br>";
         }
         else if ($rows['password']==md5($password) && $rows['status']==1) {
     	    $_SESSION['username']=$name;
             header("location:../view/userdashboard.php");
         }
         else {
-    	    $error="Invalid username or password<br>";
+    	    echo "Invalid username or password<br>";
         }
     } 
    // echo $rows['username'];   

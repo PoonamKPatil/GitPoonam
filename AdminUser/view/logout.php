@@ -6,7 +6,7 @@ session_start();
 <head><title>Logout page</title>
 <link rel = "stylesheet"
    type = "text/css"
-   href = "style.css" />
+   href = "../style.css" />
 </head>
 <body>
 <div class="nav">

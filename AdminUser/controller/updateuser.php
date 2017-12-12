@@ -12,17 +12,9 @@
 </head>
 <body>
 <?php
-include("adminclass.php");
-
-echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
+include("../Model/adminclass.php");
 if(isset($_SESSION['username'])) {
-?><div class="nav">
-  
-  <a href="updateuser.php">List User</a>
-  <a href="adminchangepwd.php">Change password</a>
-  <a href="logout.php">Logout</a>
-</div>
-<?php
+include("../view/admindashboard.php");
     //enable user
 	echo "<h3 style=\"color:#4CAF50\";>Users are:</h3>";
     $adminObj = new Admin();
@@ -30,9 +22,9 @@ if(isset($_SESSION['username'])) {
     //echo $rows['username'];
     while ($rows = mysqli_fetch_array($result)){?>
       <form method="post" action="">
-        <input type="text" style="width:150px"; name="name" value="<?php echo $rows['username']?>">
-        <input type="text" name="email" value="<?php echo $rows['email']?>" >
-        <input type="text" style="width:150px"; name="contact" value="<?php echo $rows['contact']?>" >
+        <input type="text" style="width:150px"; name="name" value="<?php echo $rows['username']?>" readonly>
+        <input type="text" name="email" value="<?php echo $rows['email']?>" readonly>
+        <input type="text" style="width:150px"; name="contact" value="<?php echo $rows['contact']?>" readonly>
 	       <a href="adminedituser.php?userid=<?php echo $rows['uid'];?>">Edit</a>
 	    <input type="submit" name="enable" value="Enable">
 	   <input type="submit" name="delete" value="Delete">
@@ -52,13 +44,13 @@ if(isset($_SESSION['username'])) {
     $result=$adminObj->getAllEnabledUsers();
     while ($rows = mysqli_fetch_array($result)){?>
       <form method="post" action="">
-        <input type="text" style="width:150px"; name="name" value="<?php echo $rows['username']?>">
+        <input type="text" style="width:150px"; name="name" value="<?php echo $rows['username']?>" readonly>
         <input type="text" name="email" value="<?php echo $rows['email']?>" >
-        <input type="text" style="width:150px"; name="contact" value="<?php echo $rows['contact']?>">   
+        <input type="text" style="width:150px"; name="contact" value="<?php echo $rows['contact']?>" readonly>   
        <a href="adminedituser.php?userid=<?php echo $rows['uid']?>">Edit</a>
         <input type="submit" name="disable" value="Disable">
         <input type="submit" name="delete" value="Delete">
-        <input type="hidden" name="oldname" value="<?php echo $rows['username']?>">
+        <input type="hidden" name="oldname" value="<?php echo $rows['username']?>" readonly>
     </form>  
      <?php echo "<br><br>";
    }
@@ -90,7 +82,7 @@ if(isset($_SESSION['username'])) {
   
 }
 else {
-    header("location:adminLogin.php");
+    header("location:../controller/adminLoginController.php");
 }
 ob_end_flush();
 ?>

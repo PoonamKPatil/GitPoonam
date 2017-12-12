@@ -12,16 +12,10 @@
 </head>
 <body>
 <?php
-echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
-include("userClass.php");
-
+include("../Model/userClass.php");
 if(isset($_SESSION['username'])) {
-?><div class="nav">
-  <a href="viewprofile.php">View Profile</a>
-  <a href="edituser.php">Edit Profile</a>
-  <a href="userChangePwd.php">Change password</a>
-  <a href="logout.php">Logout</a>
-</div>
+include("../view/userdashboard.php");
+?>
 <form method="POST" action="">
 <br>
 Old password:<input type="password" name="oldpassword" value="<?php echo $user['password']?>"><br><br>
@@ -29,8 +23,6 @@ New password:<input type="password" name="newpassword" value="<?php echo $_POST[
 Confirm password:<input type="password" name="confirmpassword" value="<?php echo $_POST['confirmpassword']?>"><br><br>
 <input type="submit" value="change" name="submit" class="submit">
 </form>
-
-
 <?php
 $userObj = new User();
 $user=$userObj->viewProfile($_SESSION['username']);
@@ -42,7 +34,7 @@ if(isset($_POST['submit']))
     {
     	$uid=$userObj->getUserByname($_SESSION['username']);
     	$userObj->changePassword($uid,md5($_POST['newpassword']));
-    	 header("location:userLogin.php?msg=password changed successfully...login again!!");
+    	 header("location:../controller/userLoginController.php?msg=password changed successfully...login again!!");
 
     }
     else
@@ -56,9 +48,10 @@ else
 }
 
 }
+
 }
 else {
-    header("location:userLogin.php");
+    header("location:../controller/userLoginController.php");
 }
 ob_end_flush();
 ?>

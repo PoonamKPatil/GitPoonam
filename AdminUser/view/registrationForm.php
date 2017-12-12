@@ -23,7 +23,7 @@ Registration form
 <form method="POST" action="">
 Name:<input type="text" name="name" maxlength=20 value="<?php echo $name?>"><span class=error>*<?php echo $nameErr ?></span><br><br>
 Password:<input type="password" name="password" value="<?php echo $password?>"><span class=error>*<?php echo $passwordErr ?></span><br><br>
-confirm Password:<input type="password" name="confirmpassword" value="<?php echo $confirmpassword?>">*<span class=error>
+confirm Password:<input type="password" name="confirmpassword" value="<?php echo $confirmpassword?>"><span class=error>*
 <?php echo $confirmpasswordErr ?></span>
 <br><br>
 Email:<input type="text" name="email" value="<?php echo $email?>"><span class=error>*<?php echo $emailErr ?></span><br><br>

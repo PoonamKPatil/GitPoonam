@@ -1,5 +1,5 @@
 <?php
-include("parentclass.php");
+include("person.php");
 
 class Admin extends Person {
 

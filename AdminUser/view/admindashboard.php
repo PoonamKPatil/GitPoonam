@@ -16,13 +16,13 @@ if(isset($_SESSION['username'])) {
 ?>
 <div class="nav">
   <a class="active" href="#home">Home</a>
-  <a href="updateuser.php">List Users</a>
-  <a href="adminchangepwd.php">Change password</a>
+  <a href="../controller/updateuser.php">List Users</a>
+  <a href="../controller/adminchangepwd.php">Change password</a>
   <a href="logout.php">Logout</a>
 </div>
 <?php }
 else {
-    header("location:adminLogin.php");
+    header("location:../controller/adminLoginController.php");
 }
 ob_end_flush();
 ?>
