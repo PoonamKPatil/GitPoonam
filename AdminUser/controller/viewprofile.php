@@ -2,15 +2,6 @@
     session_start();
     ob_start();
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<title>view profile</title>
-<link rel = "stylesheet"
-   type = "text/css"
-   href = "style.css" />
-</head>
-<body>
 <?php
 include("../Model/person.php");
 if(isset($_SESSION['username'])) {
@@ -29,5 +20,3 @@ else {
 }
 ob_end_flush();
 ?>
-</body>
-</html>

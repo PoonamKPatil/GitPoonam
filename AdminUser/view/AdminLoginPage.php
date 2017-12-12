@@ -1,4 +1,5 @@
 <?php
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["name"])) {
         $nameErr = "Enter username";
@@ -44,7 +45,6 @@ Password:<input type="password" name="password" value="<?php echo $password?>"><
 <br><br>
 <input type="submit" name="login" value="LOGIN" class="submit">
 </span><br><br>
-<h2 class="error"><?php echo $error;?></h2>
 </form>
 </div>
 </body>

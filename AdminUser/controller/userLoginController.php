@@ -5,6 +5,7 @@
 <?php
 include("../Model/DbClass.php");
 include("../view/UserLoginPage.php"); 
+
 $dbClass = new DBcontroller();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $qry="select username,password,role_id,status from usersInformation where username = '".$name."'";
         $userResult= $dbClass->runQry($qry) or die($qry."<br/><br/>".mysqli_error($connect));
         $rows = mysqli_fetch_array($userResult);
-   // echo $rows['password']."<br>";
-   // echo $password;
+  // echo $rows['password']."<br>";
+  // echo md5($password);
         if($rows['role_id']==1) {
             echo "You are not user<br>";
         }

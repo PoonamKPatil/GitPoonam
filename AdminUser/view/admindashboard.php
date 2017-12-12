@@ -18,7 +18,7 @@ if(isset($_SESSION['username'])) {
   <a class="active" href="#home">Home</a>
   <a href="../controller/updateuser.php">List Users</a>
   <a href="../controller/adminchangepwd.php">Change password</a>
-  <a href="logout.php">Logout</a>
+  <a href="../view/logout.php">Logout</a>
 </div>
 <?php }
 else {

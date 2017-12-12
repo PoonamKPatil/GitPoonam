@@ -19,7 +19,7 @@ if(isset($_SESSION['username'])) {
   <a href="../controller/viewprofile.php">View Profile</a>
   <a href="../controller/edituser.php">Edit Profile</a>
   <a href="../controller/userChangePwd.php">Change password</a>
-  <a href="../view/logout.php">Logout</a>
+  <a href="..view/logout.php">Logout</a>
 </div>
 <?php }
 else {

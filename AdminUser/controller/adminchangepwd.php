@@ -2,30 +2,11 @@
     session_start();
     ob_start();
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<title>change password</title>
-<link rel = "stylesheet"
-   type = "text/css"
-   href = "style.css" />
-</head>
-<body>
 <?php
 include("../Model/adminclass.php");
 if(isset($_SESSION['username'])) {
-  include("../view/admindashboard.php");
-?>
-<form method="POST" action="">
-<br>
-Old password:<input type="password" name="oldpassword" value="<?php echo $user['password']?>"><br><br>
-New password:<input type="password" name="newpassword" value="<?php echo $_POST['newpassword']?>"><br><br>
-Confirm password:<input type="password" name="confirmpassword" value="<?php echo $_POST['confirmpassword']?>"><br><br>
-<input type="submit" value="change" name="submit" class="submit">
-</form>
-
-
-<?php
+include("../view/admindashboard.php");
+include("../view/ChangePassword.php");
 $adminObj = new Admin();
 $user=$adminObj->viewProfile($_SESSION['username']);
 //echo $uid;
@@ -52,9 +33,8 @@ else
 }
 }
 else {
-    header("location:adminLogin.php");
+    header("location:../controller/adminLoginController.php");
 }
 ob_end_flush();
 ?>
-</body>
-</html>
+

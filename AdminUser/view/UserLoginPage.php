@@ -45,7 +45,6 @@ Password:<input type="password" name="password" value="<?php echo $password?>"><
 <input type="submit" name="login" value="LOGIN" class="submit">
 <a href="registerUser.php">Register Here</a>
 </span><br><br>
-<h2 class="error"><?php echo $error;?></h2>
 </form>
 </div>
 </body>
