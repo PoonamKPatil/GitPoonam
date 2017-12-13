@@ -1,8 +1,8 @@
 <?php
 include("person.php");
-class User extends Person {
+class User extends Person 
+{
 
 	
-
 }
 ?>

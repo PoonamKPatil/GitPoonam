@@ -4,37 +4,33 @@
 
 include("../Model/adminclass.php");
 
-if(isset($_SESSION['username'])) {
+if (isset($_SESSION['username'])) {
 
     include("../view/admindashboard.php");
-   
+  
     $adminObj = new Admin();
     $resultArr=$adminObj->getUsers();
-    //echo $rows['username'];     
-
-   if(isset($_POST['enable'])) {
+    
+    if (isset($_POST['enable'])) {
        $adminObj = new Admin();
        $uid=$adminObj->getUserIdByname($_POST['name']);
        $adminObj->enableUser($uid);
-   }
-
-   if(isset($_POST['disable'])) {
+    }
+    if (isset($_POST['disable'])) {
        $adminObj = new Admin();
        $uid=$adminObj->getUserIdByname($_POST['name']);
-       $adminObj->disableUser($uid);
-       
-   }
-     
-  if(isset($_POST['delete'])) {
+       $adminObj->disableUser($uid);   
+    }  
+    if (isset($_POST['delete'])) {
        $adminObj = new Admin();
        $uid=$adminObj->getUserIdByname($_POST['name']);
        $adminObj->deleteUser($uid);
-  }
-  include("../view/updateuserform.php");  
-  
-}
-else {
+    }
+
+    include("../view/updateuserform.php");    
+} else {
     header("location:../controller/adminLoginController.php");
 }
+
 ob_end_flush();
 ?>

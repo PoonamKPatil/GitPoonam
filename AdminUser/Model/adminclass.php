@@ -1,28 +1,26 @@
 <?php
 include("person.php");
 
-class Admin extends Person {
-
-    public function disableUser($uid) {
-
+class Admin extends Person 
+{
+    public function disableUser($uid) 
+    {
         $dbClass = new DBcontroller();
-    	$delete_users_query = "UPDATE usersInformation set status=".INACTIVE."  where uid=".$uid."";
-    
-        if($dbClass->runQry($delete_users_query)) {
+    	$disable_users_query = "UPDATE usersInformation set status=".INACTIVE."  where uid=".$uid."";
+
+        if ($dbClass->runQry($disable_users_query)) {
             echo "disabled succesfully";
-        }
-        else {
+        } else {
             echo "error while disbeling data ";  
         } 
-
     }
 
-    public function enableUser($uid) {
-
+    public function enableUser($uid)
+    {
         $dbClass = new DBcontroller();
-        $delete_users_query = "UPDATE usersInformation set status=".ACTIVE." where uid=".$uid."";
+        $enable_users_query = "UPDATE usersInformation set status=".ACTIVE." where uid=".$uid."";
     
-        if($dbClass->runQry($delete_users_query)) {
+        if ($dbClass->runQry($enable_users_query)) {
             echo "enabled succesfully";
         }
         else {
@@ -30,27 +28,28 @@ class Admin extends Person {
         }
 
     }
-    public function deleteUser($uid) {
 
+    public function deleteUser($uid) 
+    {
         $dbClass = new DBcontroller();
         $delete_users_query = "DELETE from usersInformation where uid=".$uid."";
     
-        if($dbClass->runQry($delete_users_query)) {
+        if ($dbClass->runQry($delete_users_query)) {
             echo "deleted succesfully";
-        }
-        else {
+        } else {
             echo "error while deleting data ";
         }
 
     }
-    public function getUsers() {
-        
+
+    public function getUsers() 
+    {
         $dbClass = new DBcontroller();
-        $qry="select uid,username,email,contact,status from usersInformation where role_id=".USERROLEID."";
-        $result=$dbClass->runQry($qry);
+        $userQry="select uid,username,email,contact,status from usersInformation where role_id=".USERROLEID."";
+        $result=$dbClass->runQry($userQry);
       
-        while($rows = mysqli_fetch_array($result)) {
-          $arr[] = $rows;
+        while ($rows = mysqli_fetch_array($result)) {
+            $arr[] = $rows;
         }
         return $arr;
     }

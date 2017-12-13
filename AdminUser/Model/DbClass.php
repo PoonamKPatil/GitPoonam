@@ -1,22 +1,24 @@
 <?php
-class DBcontroller {
 
-	public $dbhost;
-    public $dbuser;
-    public $dbpass;
-    public $connect;
+class DBcontroller 
+{
+	private $dbhost;
+    private $dbUser;
+    private $dbPass;
+    private $connect;
 
-    function __construct() {
+    function __construct()
+    {
     	$this->dbhost='localhost';
-    	$this->dbuser='root';
-    	$this->dbpass='compass';
-    	$this->connect=mysqli_connect($this->dbhost,$this->dbuser,$this->dbpass);
+    	$this->dbUser='root';
+    	$this->dbPass='compass';
+    	$this->connect=mysqli_connect($this->dbhost,$this->dbUser,$this->dbPass);
     	mysqli_select_db($this->connect,"loginTest_db");
     }
     
-    public function runQry($qry) {
-       $result=mysqli_query($this->connect,$qry) or die(mysqli_error($this->connect));
-       return $result;
+    public function runQry($qry)
+    {
+       return  mysqli_query($this->connect,$qry) or die(mysqli_error($this->connect));
     }
 }
 ?>

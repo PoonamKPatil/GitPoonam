@@ -1,14 +1,13 @@
-<?php if ($_SERVER["REQUEST_METHOD"] == "POST") {
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["name"])) {
         $nameErr = "Enter username";
-    } 
-    else {
+    } else {
         $name=$_POST['name'];
     }
-    if(empty($_POST["password"])) {
+    if (empty($_POST["password"])) {
         $passwordErr="Enter password";
-    }
-    else {
+    } else {
         $password=$_POST['password'];
     } 
  }
