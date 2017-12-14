@@ -68,31 +68,46 @@ class Person {
         return $result;
     }
     public function editProfile($uid,$name=null,$email=null,$contact=null) {
-        
         $dbClass = new DBcontroller();
-
-        if($name)
+        
+        if($name==null && $email!=null && $contact!=null)
         {
-            $subqry="username='$name',";
+            $update_users_query = "UPDATE usersInformation set email='$email' , contact=$contact  where uid=".$uid."";
         }
-        if($email)
+        else if($email==null && $name!=null && $contact!=null)
+        { 
+            $update_users_query = "UPDATE usersInformation set username='$name',contact=$contact where uid=".$uid."";
+        }
+        else if($name==null && $email==null && $contact!=null) 
         {
-            $subqry.="email='$email',";
+            $update_users_query = "UPDATE usersInformation set contact=$contact where uid=".$uid."";
         }
-        if($contact)
+        else if($contact==null && $email==null && $name!=null) 
         {
-            $subqry.="contact=$contact";
+            $update_users_query = "UPDATE usersInformation set username='$name' where uid=".$uid."";
         }
+        else if($contact==null && $name==null && $email!=null)
+        {
 
-        $update_users_query = "UPDATE usersInformation set ".$subqry." where uid=".$uid."";
+            $update_users_query = "UPDATE usersInformation set email='$email' where uid=".$uid."";
+        }
+        else 
+        {
+            $update_users_query = "UPDATE usersInformation set username='$name', email='$email',contact=$contact where uid=".$uid."";
+           
 
-        if($dbClass->runQry($update_users_query)) {
-            
+        }
+    
+       
+        if($dbClass->runQry($update_users_query))
+        {
             return true;
 
-        }      
+        }
+        else
+        {
            return false;
-        
+        }
 
     }
     public function insert(Person $person) {
@@ -112,8 +127,11 @@ class Person {
         {
            return true;
 
-        }      
+        }
+        else
+        {
           return false;
+        }
 
     }
 

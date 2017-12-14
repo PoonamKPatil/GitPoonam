@@ -6,7 +6,7 @@ include("../Model/person.php");
 
 if (isset($_SESSION['username'])) {
 
-    include("../view/userdashboard.php");
+include("../view/userdashboard.php");
 
 	echo "<h3 style=\"color:#4CAF50\";>Your Details:</h3>";
     $userObj = new Person();

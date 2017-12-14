@@ -71,10 +71,10 @@ class Admin extends Person {
         }
         return $arr;
     }
-    public function getAllEnabledUsers() {
+    public function getUsers() {
         $arr=array();
         $dbClass = new DBcontroller();
-        $qry="select uid,username,email,contact,status from usersInformation where role_id=2 and status=1";
+        $qry="select uid,username,email,contact,status from usersInformation where role_id=2";
         $result=$dbClass->runQry($qry);
       
        /* while($rows = mysqli_fetch_array($result)) {
@@ -82,17 +82,17 @@ class Admin extends Person {
         }*/
         return $result;
     }
-    public function getAllDisableUsers() {
+    /*public function getAllDisableUsers() {
         $arr=array();
         $dbClass = new DBcontroller();
         $qry="select uid,username,email,contact,status from usersInformation where role_id=2 and status=0";
         $result=$dbClass->runQry($qry);
       
-        /*while() {
+        while() {
          // $arr[] = array($rows['username'],$rows['email'],$rows['contact']);
-        }*/
+        }
         return $result;
-    }
+    }*/
     public function getUserByname($uname) {
 
         $dbClass = new DBcontroller();

@@ -12,36 +12,36 @@
 </head>
 <body>
 <?php
-
 echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
 include("userClass.php");
 
 if(isset($_SESSION['username'])) {
+  $uid=$_GET['userid'];
+  $userobj = new Person();
+  $userarr=$userobj->getUserByid($uid);
 ?><div class="nav">
-  <a href="viewprofile.php">View Profile</a>
-  <a href="edituser.php">Edit Profile</a>
-  <a href="userChangePwd.php">Change password</a>
+  <a class="active" href="#home">Home</a>
+  <a href="updateuser.php">List Users</a>
+  <a href="adminchangepwd.php">Change password</a>
   <a href="logout.php">Logout</a>
 </div>
-<?php
-$userObj = new Person();
-$user=$userObj->viewProfile($_SESSION['username']);
-?>
 <br>
+<?php
+while ($user = mysqli_fetch_array($userarr)){?>
 <form method="POST" action="">
 Name:<input type="text" name="name" value="<?php echo $user['username']?>"><br><br>
 Email:<input type="text" name="email" value="<?php echo $user['email']?>"><br><br>
 Phone Number:<input type="text" name="contact" value="<?php echo $user['contact']?>"><br><br>
 <input type="submit" value="Save" name="submit" class="submit">
 </form>
-<?php
-$userObj = new User();
-$uid=$userObj->getUserByname($_SESSION['username']);
+<?php echo "<br><br>";
+}
+$usr=new User();
 //echo $uid;
 if(isset($_POST['submit'])) {
-   if($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact']))
+   if($usr->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact']))
    {
-   	 echo "succesffuly updated";
+   	 header("location:updateuser.php");
    }
 
 }

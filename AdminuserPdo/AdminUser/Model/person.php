@@ -101,11 +101,11 @@ class Person
     public function getUserByName($name) 
     {
         $dbClass = new DBcontroller();
-        $qry="select * from usersInformation where username='".$name."'";
-        //echo $qry;
-        $result=$dbClass->runQry($qry);
- 
-        return mysqli_fetch_array($result);
+        $userqry="select username,password,role_id,status from usersInformation where username = '".$name."'";
+        $userResult= $dbClass->runQry($userqry) or die($userqry."<br/><br/>".mysqli_error($db->connect));
+        $rows = mysqli_fetch_array($userResult);
+      
+        return $rows;
     }
 
     public function editProfile($uid, $name=null, $email=null, $contact=null) 

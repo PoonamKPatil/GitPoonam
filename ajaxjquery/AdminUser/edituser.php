@@ -12,7 +12,6 @@
 </head>
 <body>
 <?php
-
 echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
 include("userClass.php");
 
