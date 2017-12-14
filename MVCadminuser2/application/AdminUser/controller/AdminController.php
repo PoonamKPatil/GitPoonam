@@ -4,6 +4,7 @@ namespace Compassite\controller;
 
 use Compassite\Model\Admin;
 use Compassite\Model\User;
+use Compassite\Model\Person;
 use Compassite\Model\Validation;
 
 class AdminController
@@ -19,11 +20,9 @@ class AdminController
                 empty($confirmpasswordErr)
                 ) {
                     try {
-
+                        
                         $user = $adminObj->getUserByName($_POST['name']);
 
-                        echo $user['password']."<br>";
-                        echo  md5($_POST['password']);
                         if ($user['role_id'] == USERROLEID) {
                             $error= "You are not admin<br>";
                         } else if ($user['password'] == md5($_POST['password'])) {
@@ -44,8 +43,7 @@ class AdminController
 
     public function adminChangePassword()
     {
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-       
+    
         $adminObj = new Admin();
         $user=$adminObj->viewProfile($_SESSION['admin_username']);
 
@@ -69,27 +67,28 @@ class AdminController
             
    
         }
+        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/adminchangepassword.php");
        
     }
 
     public function adminEditUser() 
     {
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-       
         $uid=$_GET['userid'];
         $userobj = new Person();
         $user=$userobj->getUserById($uid);
         $usr=new User();
+
         if (isset($_POST['submit']) && 
             empty($nameErr) && 
             empty($emailErr) && 
             empty($conatctErr)
             ) {
                 if ($usr->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
-                    header("location:/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/updateuser.php");
+                    header("location:".APP_URL."/index.php?page=listuser");
                 }
         }
+        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser//view/adminedituserform.php");
         
 
@@ -97,7 +96,7 @@ class AdminController
 
     public function updateUser()
     {
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
+        
             $adminObj = new Admin();
             $resultArr=$adminObj->getUsers();
             if (isset($_POST['enable'])) {
@@ -115,6 +114,7 @@ class AdminController
                 $uid=$adminObj->getUserIdByname($_POST['name']);
                 $adminObj->deleteUser($uid);
             }
+            include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
              include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/updateuserform.php");    
          
         

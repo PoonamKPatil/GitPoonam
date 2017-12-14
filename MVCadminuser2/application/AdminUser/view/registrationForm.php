@@ -20,7 +20,7 @@ Registration form
 </style>
 </head>
 <body>
-<form method="POST" action="">
+<form method="POST" action="index.php?page=registeruser">
 Name:<input type="text" name="name" maxlength=20 value="<?php echo $name?>"><span class=error>*<?php echo $nameErr ?></span><br><br>
 Password:<input type="password" name="password" value="<?php echo $password?>"><span class=error>*<?php echo $passwordErr ?></span><br><br>
 confirm Password:<input type="password" name="confirmpassword" value="<?php echo $confirmpassword?>"><span class=error>*

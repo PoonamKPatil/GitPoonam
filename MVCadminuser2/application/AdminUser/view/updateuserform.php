@@ -13,14 +13,14 @@
 </tr>
 <?php foreach ($resultArr as $userInfo) { 
 ?>  
-<form method="post" action="">
+<form method="post" action="index.php?page=listuser">
 <tr>
 <td><input type="text" name="name" value='<?php echo $userInfo['username']; ?>' /></td>
 <td><input type="text" name="email" value='<?php echo $userInfo['email']; ?> '/></td>
 <td><input type="text" name="contact" value='<?php echo $userInfo['contact'];?>'/></td>
-<td><a href="adminedituser.php?userid=<?php echo $userInfo['uid'];?>">Edit</a> </td>
+<td><a href="index.php?page=adminedit&userid=<?php echo $userInfo['uid'];?>">Edit</a> </td>
 <?php 
-if($userInfo['status']==0){ ?>
+if($userInfo['status']==INACTIVE){ ?>
 <td><input type="submit" name="enable" value="Enable"></td>
 <?php 
 }

@@ -17,8 +17,8 @@ class  UserController
                 empty($passwordErr) && 
                 empty($confirmpasswordErr)
                ) {  
-                   $adminObj=new User();
-                   $result=$adminObj->getUserByName($_POST['name']);
+                   $userObj=new User();
+                   $result=$userObj->getUserByName($_POST['name']);
                    
                    if ($result['role_id']==ADMINROLEID) {
                        $error= "You are not user<br>";
@@ -51,7 +51,7 @@ class  UserController
                   if($userObj->checkPassword(md5($_POST['oldpassword']))) {
                       $uid=$userObj->getUserIdByname($_SESSION['username']);
                       $userObj->changePassword($uid,md5($_POST['newpassword']));
-                      header("location:/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/UserLoginPage.php");
+                      header("location:".APP_URL."/index.php?page=userlogin");
                    } else {
                        echo "provide correct details";
                    }
@@ -77,7 +77,7 @@ class  UserController
            ) {
                $person = new Person($name,$pwd,$email,$contact,2);
                if($person->insert($person)) {
-                   header("location:/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/UserLoginPage.php");
+                   header("location:".APP_URL."/index.php?page=userlogin");
                 }
         }
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/registrationForm.php");

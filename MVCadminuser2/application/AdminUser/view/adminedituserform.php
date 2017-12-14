@@ -4,7 +4,7 @@
 <title>Edit profile</title>
 </head>
 <body>
-<form method="POST" action="">
+<form method="POST" action="index.php?page=adminedit">
 Name:<input type="text" name="name" maxlength=20 value="<?php echo $user['username']?>" >
 <span class=error><?php echo $nameErr ?></span><br><br>
 Email:<input type="text" name="email" value="<?php echo $user['email']?>" >

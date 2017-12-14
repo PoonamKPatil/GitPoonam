@@ -34,6 +34,11 @@ if($_GET['page']=='changepwd'){
 	$viewObj->adminChangePassword();
 }
 
+if($_GET['page']=='adminedit'){
+	$viewObj = new Compassite\controller\AdminController();
+	$viewObj->adminEditUser();
+}
+
 
 //user
 if($_GET['page']=='registeruser'){
@@ -66,5 +71,6 @@ if($_GET['page']=='userchangepwd'){
 	$viewObj->userChangePassword();
 }
 if($_GET['page']=='logout'){
-	header("location:/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/welcome.php");
+	$viewObj = new Compassite\controller\LogoutController();
+	$viewObj->logout();
 }

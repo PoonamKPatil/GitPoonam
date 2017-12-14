@@ -107,7 +107,7 @@ class Person
 
     public function editProfile($uid, $name=null, $email=null, $contact=null) 
     {  
-
+        
         if($name) {
             $subqry = "username='$name',";
         }
