@@ -38,7 +38,7 @@ class  UserController
 
     public function userChangePassword()
     {
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userdashboard.php");
+        
         $userObj = new User();
         $user=$userObj->viewProfile($_SESSION['username']);
 
@@ -59,7 +59,8 @@ class  UserController
                     echo "empty field or new password and confirm password doesnt match";
                 }
            }
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userchangepassword.php");
+           include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userdashboard.php");
+           include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userchangepassword.php");
         
 
     }

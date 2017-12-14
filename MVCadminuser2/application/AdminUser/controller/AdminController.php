@@ -59,7 +59,7 @@ class AdminController
                     if ($adminObj->checkPassword(md5($_POST['oldpassword']))) {
                         $uid=$adminObj->getUserIdByname($_SESSION['admin_username']);
                         $adminObj->changePassword($uid,md5($_POST['newpassword']));
-                        header("location:/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/AdminLoginPage.php");
+                        header("location:".APP_URL."/index.php?page=login");
                     } else {
                         echo "provide correct details";
                     }
