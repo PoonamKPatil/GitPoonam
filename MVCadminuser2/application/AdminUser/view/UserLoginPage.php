@@ -21,13 +21,13 @@ Login page
 </head>
 <body>
 <div style="width: 500px; margin: 200px auto 0 auto;" >
-<form method="POST" action="">
+<form method="POST" action="index.php?page=userlogin">
 <h2 style="color: green"><?php  echo $_GET['msg']?></h2><br><br>
 User Name:<input type="text" name="name" value="<?php echo $name?>"><span class=error>*<?php echo $nameErr ?></span><br><br>
 Password:<input type="password" name="password" value="<?php echo $password?>"><span class=error>*<?php echo $passwordErr ?>
 <br><br>
 <input type="submit" name="login" value="LOGIN" class="submit">
-<a href="registerUser.php">Register Here</a>
+<a href="index.php?page=registeruser">Register Here</a>
 </span><br><br>
 <h2 class="error"><?php echo $error;?></h2>
 </form>

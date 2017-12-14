@@ -6,12 +6,10 @@ use Compassite\Model\Admin;
 use Compassite\Model\User;
 use Compassite\Model\Validation;
 
-
 class AdminController
 {
     public function loginValidation()
-    {
-       
+    {  
         $adminObj = new Admin();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (empty($nameErr) && 
@@ -23,11 +21,13 @@ class AdminController
                     try {
 
                         $user = $adminObj->getUserByName($_POST['name']);
-                        
+
+                        echo $user['password']."<br>";
+                        echo  md5($_POST['password']);
                         if ($user['role_id'] == USERROLEID) {
                             $error= "You are not admin<br>";
                         } else if ($user['password'] == md5($_POST['password'])) {
-                            $_SESSION['username']=$_POST['name'];
+                            $_SESSION['admin_username']=$_POST['name'];
                             header("location:".APP_URL."/index.php?page=dashaboard");
                         } else {
                             $error= "Invalid username or password<br>";
@@ -45,9 +45,9 @@ class AdminController
     public function adminChangePassword()
     {
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-        if(isset($_SESSION['username'])) {
+       
         $adminObj = new Admin();
-        $user=$adminObj->viewProfile($_SESSION['username']);
+        $user=$adminObj->viewProfile($_SESSION['admin_username']);
 
 
         if (isset($_POST['submit'])) {
@@ -57,29 +57,26 @@ class AdminController
                 ($_POST['newpassword']==$_POST['confirmpassword'])
                 ) {
                     if ($adminObj->checkPassword(md5($_POST['oldpassword']))) {
-                        $uid=$adminObj->getUserIdByname($_SESSION['username']);
+                        $uid=$adminObj->getUserIdByname($_SESSION['admin_username']);
                         $adminObj->changePassword($uid,md5($_POST['newpassword']));
-                        header("location:../controller/adminLoginController.php?msg=password changed successfully...login again!!");
+                        header("location:/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/AdminLoginPage.php");
                     } else {
                         echo "provide correct details";
                     }
             } else {
                 echo "empty field or new password and confirm password doesnt match";
             }
-            include("../view/ChangePassword.php");
+            
    
         }
-        } else {
-            header("location:../controller/adminLoginController.php");
-       }
+        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/adminchangepassword.php");
        
     }
 
     public function adminEditUser() 
     {
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-        if(isset($_SESSION['username'])) {
-
+       
         $uid=$_GET['userid'];
         $userobj = new Person();
         $user=$userobj->getUserById($uid);
@@ -90,13 +87,10 @@ class AdminController
             empty($conatctErr)
             ) {
                 if ($usr->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
-                    header("location:updateuser.php");
+                    header("location:/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/updateuser.php");
                 }
         }
-                include("../view/adminedituserform.php");
-        } else {
-              header("location:adminLogin.php");
-        }
+        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser//view/adminedituserform.php");
         
 
     }
@@ -104,8 +98,6 @@ class AdminController
     public function updateUser()
     {
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-        
-        if (isset($_SESSION['username'])) {
             $adminObj = new Admin();
             $resultArr=$adminObj->getUsers();
             if (isset($_POST['enable'])) {
@@ -124,9 +116,8 @@ class AdminController
                 $adminObj->deleteUser($uid);
             }
              include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/updateuserform.php");    
-        } else {
-                    header("location:../controller/adminLoginController.php");
-        }
+         
+        
 
 
     }

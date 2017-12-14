@@ -4,7 +4,7 @@
 </head>
 <body>
 <h1 style="color: green;">WELCOME</h1>
-<a href="../controller/adminLoginController.php">Login as ADMIN</a><br>
-<a href="../controller/userLoginController.php">Login as USER</a>
+<a href="index.php?page=login">Login as ADMIN</a><br>
+<a href="index.php?page=userlogin">Login as USER</a>
 </body>
 </html>

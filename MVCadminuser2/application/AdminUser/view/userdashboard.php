@@ -1,5 +1,4 @@
 <?php
-
     echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
 ?>
 <!DOCTYPE html>
@@ -10,20 +9,12 @@
    href = "../style.css" />
 </head>
 <body>
-<?php 
-if(isset($_SESSION['username'])) {
-?>
 <div class="nav">
   <a class="active" href="#home">Home</a>
-  <a href="../controller/viewprofile.php">View Profile</a>
-  <a href="../controller/edituser.php">Edit Profile</a>
-  <a href="../controller/userChangePwd.php">Change password</a>
-  <a href="../view/logout.php">Logout</a>
+  <a href="index.php?page=viewprofile">View Profile</a>
+  <a href="index.php?page=editprofile">Edit Profile</a>
+  <a href="index.php?page=userchangepwd">Change password</a>
+  <a href="index.php?page=logout">Logout</a>
 </div>
-<?php }
-else {
-    header("location:adminLogin.php");
-}
-?>
 </body>
 </html>

@@ -5,6 +5,7 @@ class AdminDashboard
 {
 	public function dashboard()
 	{
-		header("location:".APP_URL."/application/AdminUser/view/admindashboard.php");
+		include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
+		//header("location:".APP_URL."/application/AdminUser/view/admindashboard.php");
 	}
 }

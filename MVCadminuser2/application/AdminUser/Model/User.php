@@ -1,7 +1,7 @@
 <?php
 namespace Compassite\Model;
 
-include("person.php");
+use Compassite\Model\Person;
 class User extends Person 
 {
 

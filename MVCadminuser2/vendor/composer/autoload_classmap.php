@@ -13,4 +13,6 @@ return array(
     'Compassite\\Model\\Validation' => $baseDir . '/application/AdminUser/Model/Validation.php',
     'Compassite\\controller\\AdminController' => $baseDir . '/application/AdminUser/controller/AdminController.php',
     'Compassite\\controller\\AdminDashboard' => $baseDir . '/application/AdminUser/controller/AdminDashboard.php',
+    'Compassite\\controller\\UserController' => $baseDir . '/application/AdminUser/controller/UserController.php',
+    'Compassite\\controller\\UserDashboard' => $baseDir . '/application/AdminUser/controller/UserDashboard.php',
 );

@@ -28,6 +28,8 @@ class ComposerStaticInit825f4254ac8ac80848b27c6818c212a0
         'Compassite\\Model\\Validation' => __DIR__ . '/../..' . '/application/AdminUser/Model/Validation.php',
         'Compassite\\controller\\AdminController' => __DIR__ . '/../..' . '/application/AdminUser/controller/AdminController.php',
         'Compassite\\controller\\AdminDashboard' => __DIR__ . '/../..' . '/application/AdminUser/controller/AdminDashboard.php',
+        'Compassite\\controller\\UserController' => __DIR__ . '/../..' . '/application/AdminUser/controller/UserController.php',
+        'Compassite\\controller\\UserDashboard' => __DIR__ . '/../..' . '/application/AdminUser/controller/UserDashboard.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

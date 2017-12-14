@@ -1,6 +1,5 @@
 <?php
-    ob_start();
-    echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['username']."</h2>";
+    echo "<h2 style=\"color:purple\";>Hi  ".$_SESSION['admin_username']."</h2>";
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,20 +9,11 @@
    href = "../style.css" />
 </head>
 <body>
-<?php 
-if(isset($_SESSION['username'])) {
-?>
 <div class="nav">
   <a class="active" href="#home">Home</a>
-  <a href="../controller/updateuser.php">List Users</a>
-  <a href="../controller/adminchangepwd.php">Change password</a>
-  <a href="../view/logout.php">Logout</a>
+  <a href="index.php?page=listuser">List Users</a>
+  <a href="index.php?page=changepwd">Change password</a>
+  <a href="index.php?page=logout">Logout</a>
 </div>
-<?php }
-else {
-    header("location:../../../index.php?page=login");
-}
-ob_end_flush();
-?>
 </body>
 </html>
