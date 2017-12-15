@@ -5,20 +5,19 @@ namespace Compassite\controller;
 use Compassite\Model\Admin;
 use Compassite\Model\User;
 use Compassite\Model\Person;
-use Compassite\Model\Validation;
+use Compassite\Model\Validationn;
 
 class AdminController
 {
     public function loginValidation()
     {  
         $adminObj = new Admin();
+        if(isset($_POST['login'])) {
+           $doValidate  =  new Validationn($_POST);  
+           $emptyErrorMsg = $doValidate->getError();
+        }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (empty($nameErr) && 
-                empty($emailErr) && 
-                empty($contactErr) && 
-                empty($passwordErr) && 
-                empty($confirmpasswordErr)
-                ) {
+            if (empty($emptyErrorMsg)) {
                     try {
                         
                         $user = $adminObj->getUserByName($_POST['name']);
@@ -75,16 +74,16 @@ class AdminController
     public function adminEditUser() 
     {
         $uid=$_GET['userid'];
-        $userobj = new Person();
-        $user=$userobj->getUserById($uid);
-        $usr=new User();
-
+        $userObj = new User();
+        $user=$userObj->getUserById($uid);
+       
+         
         if (isset($_POST['submit']) && 
             empty($nameErr) && 
             empty($emailErr) && 
             empty($conatctErr)
             ) {
-                if ($usr->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
+                if ($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
                     header("location:".APP_URL."/index.php?page=listuser");
                 }
         }
@@ -96,7 +95,6 @@ class AdminController
 
     public function updateUser()
     {
-        
             $adminObj = new Admin();
             $resultArr=$adminObj->getUsers();
             if (isset($_POST['enable'])) {
@@ -116,10 +114,6 @@ class AdminController
             }
             include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
              include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/updateuserform.php");    
-         
-        
-
-
     }
 
 

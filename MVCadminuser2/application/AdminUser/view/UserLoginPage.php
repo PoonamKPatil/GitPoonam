@@ -23,8 +23,8 @@ Login page
 <div style="width: 500px; margin: 200px auto 0 auto;" >
 <form method="POST" action="index.php?page=userlogin">
 <h2 style="color: green"><?php  echo $_GET['msg']?></h2><br><br>
-User Name:<input type="text" name="name" value="<?php echo $name?>"><span class=error>*<?php echo $nameErr ?></span><br><br>
-Password:<input type="password" name="password" value="<?php echo $password?>"><span class=error>*<?php echo $passwordErr ?>
+User Name:<input type="text" name="name" value="<?php echo $_POST['name']?>"><span class=error>*<?php echo $emptyErrorMsg['name'] ?></span><br><br>
+Password:<input type="password" name="password" value="<?php echo $_POST['password']?>"><span class=error>*<?php echo $emptyErrorMsg['password'] ?>
 <br><br>
 <input type="submit" name="login" value="LOGIN" class="submit">
 <a href="index.php?page=registeruser">Register Here</a>

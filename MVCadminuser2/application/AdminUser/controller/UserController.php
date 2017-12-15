@@ -4,22 +4,22 @@ namespace Compassite\controller;
 use Compassite\Model\Person;
 use Compassite\Model\Admin;
 use Compassite\Model\User;
-use Compassite\Model\Validation;
+use Compassite\Model\Validationn;
 
 class  UserController
 {
     public function loginValidation() 
     {
+        if(isset($_POST['login'])) {
+           $doValidate  =  new Validationn($_POST);  
+           $emptyErrorMsg = $doValidate->getError();
+        }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (empty($nameErr) && 
-                empty($emailErr) && 
-                empty($contactErr) && 
-                empty($passwordErr) && 
-                empty($confirmpasswordErr)
-               ) {  
-                   $userObj=new User();
-                   $result=$userObj->getUserByName($_POST['name']);
-                   
+            if (empty($emptyErrorMsg)) {  
+                     $userObj=new User();
+                     $result=$userObj->getUserByName($_POST['name']);
+                    /* echo $result['password']."<br>";
+                     echo md5($_POST['password']);*/
                    if ($result['role_id']==ADMINROLEID) {
                        $error= "You are not user<br>";
                     } else if ($result['password']==md5($_POST['password']) && $result['status']==ACTIVE) {
@@ -68,14 +68,18 @@ class  UserController
 
     public function registerUser()
     {
+        if(isset($_POST['submit'])) {
+           $doValidate  =  new Validationn($_POST);  
+           $emptyErrorMsg = $doValidate->getError();
+        }
         if (isset($_POST['submit']) && 
-            empty($nameErr) && 
+            empty($emptyErrorMsg) && 
             empty($emailErr) && 
             empty($contactErr) && 
             empty($passwordErr) && 
             empty($confirmpasswordErr)
            ) {
-               $person = new Person($name,$pwd,$email,$contact,2);
+               $person = new Person($_POST['name'],md5($_POST['password']),$_POST['email'],$_POST['contact'],2);
                if($person->insert($person)) {
                    header("location:".APP_URL."/index.php?page=userlogin");
                 }

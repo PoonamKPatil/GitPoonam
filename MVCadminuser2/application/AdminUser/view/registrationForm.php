@@ -21,13 +21,13 @@ Registration form
 </head>
 <body>
 <form method="POST" action="index.php?page=registeruser">
-Name:<input type="text" name="name" maxlength=20 value="<?php echo $name?>"><span class=error>*<?php echo $nameErr ?></span><br><br>
-Password:<input type="password" name="password" value="<?php echo $password?>"><span class=error>*<?php echo $passwordErr ?></span><br><br>
+Name:<input type="text" name="name" maxlength=20 value="<?php echo $name?>"><span class=error>*<?php echo $emptyErrorMsg['name'] ?></span><br><br>
+Password:<input type="password" name="password" value="<?php echo $password?>"><span class=error>*<?php echo $emptyErrorMsg['password'] ?></span><br><br>
 confirm Password:<input type="password" name="confirmpassword" value="<?php echo $confirmpassword?>"><span class=error>*
-<?php echo $confirmpasswordErr ?></span>
+<?php echo $emptyErrorMsg['confirmpass'] ?></span>
 <br><br>
-Email:<input type="text" name="email" value="<?php echo $email?>"><span class=error>*<?php echo $emailErr ?></span><br><br>
-Phone Number:<input type="text" name="contact" value="<?php echo $contact?>"><span class=error>*<?php echo $contactErr ?></span><br><br>
+Email:<input type="text" name="email" value="<?php echo $email?>"><span class=error>*<?php echo $emptyErrorMsg['email'] ?></span><br><br>
+Phone Number:<input type="text" name="contact" value="<?php echo $contact?>"><span class=error>*<?php echo $emptyErrorMsg['contact'] ?></span><br><br>
 <input type="submit" value="submit" name="submit" class="submit">
 </form>
 </body>
