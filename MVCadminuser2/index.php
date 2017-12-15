@@ -74,3 +74,8 @@ if($_GET['page']=='logout'){
 	$viewObj = new Compassite\controller\LogoutController();
 	$viewObj->logout();
 }
+
+if($_GET['page']=='home'){
+	$viewObj = new Compassite\controller\HomeController();
+	$viewObj->welcome();
+}

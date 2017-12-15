@@ -4,7 +4,6 @@ namespace Compassite\Model;
 class Validationn
 {
    public $expectedInput = array("name","password","contact","email");
-
    public $inputData ;
    public $errorMessage;
 
@@ -26,12 +25,14 @@ class Validationn
                         }
               }
           }
-
     }
     public function validMobile()
     {
-
-
+            $contact = $this->expectedInput['contact'];
+            if (!preg_match("/^[9|7|8][0-9]{9}$/",$contact)) {
+                $this->errorMessage['contact'] = " Inavlid mobile number ";
+            }
+        
     }
 
     public function getError()

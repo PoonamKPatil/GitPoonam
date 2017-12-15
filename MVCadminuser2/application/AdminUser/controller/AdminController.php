@@ -38,11 +38,9 @@ class AdminController
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/AdminLoginPage.php"); 
         
     }
-
-
+    
     public function adminChangePassword()
     {
-    
         $adminObj = new Admin();
         $user=$adminObj->viewProfile($_SESSION['admin_username']);
 
@@ -58,12 +56,12 @@ class AdminController
                         $adminObj->changePassword($uid,md5($_POST['newpassword']));
                         header("location:".APP_URL."/index.php?page=login");
                     } else {
-                        echo "provide correct details";
+                        $error= "provide correct details";
                     }
             } else {
-                echo "empty field or new password and confirm password doesnt match";
+                $error= "empty field or new password and confirm password doesnt match";
             }
-            
+             
    
         }
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
@@ -100,17 +98,29 @@ class AdminController
             if (isset($_POST['enable'])) {
                 $adminObj = new Admin();
                 $uid=$adminObj->getUserIdByname($_POST['name']);
-                $adminObj->enableUser($uid);
+                if ($adminObj->enableUser($uid)) {
+                    $msg=$_POST['name']." Succesfuuly disabled";
+                } else {
+                    $msg=$_POST['name']."Error while disabeling";
+                }
             }
             if (isset($_POST['disable'])) {
                 $adminObj = new Admin();
                 $uid=$adminObj->getUserIdByname($_POST['name']);
-                $adminObj->disableUser($uid);   
+                if ($adminObj->disableUser($uid)) {
+                    $msg=$_POST['name']." Succesfuuly enabled";
+                } else {
+                    $msg=$_POST['name']."Error while enabeling";
+                }
             }  
             if (isset($_POST['delete'])) {
                 $adminObj = new Admin();
                 $uid=$adminObj->getUserIdByname($_POST['name']);
-                $adminObj->deleteUser($uid);
+                if ($adminObj->deleteUser($uid)) {
+                    $msg=$_POST['name']." Succesfuuly deleted";
+                } else {
+                    $msg=$_POST['name']." Error while deleting";
+                }
             }
             include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
              include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/updateuserform.php");    

@@ -4,7 +4,7 @@
 </head>
 <body>
 <div class="nav">
-  <a href="welcome.php">Home</a>
+  <a href="index.php?page=home">Home</a>
 </div>
 <?php
 session_destroy();

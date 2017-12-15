@@ -18,8 +18,6 @@ class  UserController
             if (empty($emptyErrorMsg)) {  
                      $userObj=new User();
                      $result=$userObj->getUserByName($_POST['name']);
-                    /* echo $result['password']."<br>";
-                     echo md5($_POST['password']);*/
                    if ($result['role_id']==ADMINROLEID) {
                        $error= "You are not user<br>";
                     } else if ($result['password']==md5($_POST['password']) && $result['status']==ACTIVE) {
@@ -51,12 +49,12 @@ class  UserController
                   if($userObj->checkPassword(md5($_POST['oldpassword']))) {
                       $uid=$userObj->getUserIdByname($_SESSION['username']);
                       $userObj->changePassword($uid,md5($_POST['newpassword']));
-                      header("location:".APP_URL."/index.php?page=userlogin");
+                      header("location:".APP_URL."/index.php?page=userlogin&msg=Password changed login again");
                    } else {
-                       echo "provide correct details";
+                       $msg = "provide correct details";
                    }
                 } else {
-                    echo "empty field or new password and confirm password doesnt match";
+                    $msg = "empty field or new password and confirm password doesnt match";
                 }
            }
            include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userdashboard.php");
@@ -81,7 +79,7 @@ class  UserController
            ) {
                $person = new Person($_POST['name'],md5($_POST['password']),$_POST['email'],$_POST['contact'],2);
                if($person->insert($person)) {
-                   header("location:".APP_URL."/index.php?page=userlogin");
+                   header("location:".APP_URL."/index.php?page=userlogin&msg=Registered successfully !! login here");
                 }
         }
         include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/registrationForm.php");
@@ -108,8 +106,6 @@ class  UserController
             $userObj = new User();
             $user=$userObj->viewProfile($_SESSION['username']);
             $uid=$userObj->getUserIdByname($_SESSION['username']);
-            //var_dump($_POST);
-            //exit();
             if (isset($_POST['submit']) && 
                 empty($nameErr) && 
                 empty($emailErr) && 
@@ -117,7 +113,7 @@ class  UserController
                ) {
                    if ($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
                        $_SESSION['username']=$_POST['name'];
-                       echo "succesffuly updated";
+                       $successmsg = "succesffuly updated";
                     }
             }
             include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userdashboard.php");

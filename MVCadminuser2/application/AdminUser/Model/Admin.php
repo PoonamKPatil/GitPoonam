@@ -12,9 +12,9 @@ class Admin extends Person
     	$disable_users_query = "UPDATE usersInformation set status=".INACTIVE."  where uid=".$uid."";
 
         if ($dbClass->runQry($disable_users_query)) {
-            echo "disabled succesfully";
+            return true;
         } else {
-            echo "error while disbeling data ";  
+            return false;
         } 
     }
 
@@ -24,10 +24,10 @@ class Admin extends Person
         $enable_users_query = "UPDATE usersInformation set status=".ACTIVE." where uid=".$uid."";
     
         if ($dbClass->runQry($enable_users_query)) {
-            echo "enabled succesfully";
+            return true;
         }
         else {
-            echo "error while enabeling data ";
+            return false;
         }
 
     }
@@ -38,9 +38,9 @@ class Admin extends Person
         $delete_users_query = "DELETE from usersInformation where uid=".$uid."";
     
         if ($dbClass->runQry($delete_users_query)) {
-            echo "deleted succesfully";
+            return true;
         } else {
-            echo "error while deleting data ";
+            return false;
         }
 
     }

@@ -14,6 +14,7 @@ return array(
     'Compassite\\Model\\Validationn' => $baseDir . '/application/AdminUser/Model/Validationn.php',
     'Compassite\\controller\\AdminController' => $baseDir . '/application/AdminUser/controller/AdminController.php',
     'Compassite\\controller\\AdminDashboard' => $baseDir . '/application/AdminUser/controller/AdminDashboard.php',
+    'Compassite\\controller\\HomeController' => $baseDir . '/application/AdminUser/controller/HomeController.php',
     'Compassite\\controller\\LogoutController' => $baseDir . '/application/AdminUser/controller/LogoutController.php',
     'Compassite\\controller\\UserController' => $baseDir . '/application/AdminUser/controller/UserController.php',
     'Compassite\\controller\\UserDashboard' => $baseDir . '/application/AdminUser/controller/UserDashboard.php',
