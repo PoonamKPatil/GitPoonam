@@ -11,7 +11,7 @@
 <th>Email</th>
 <th>Phone Number</th>
 </tr>
-<?php foreach ($resultArr as $userInfo) : ?>  
+<?php foreach ($users as $userInfo) : ?>  
 <form method="post" action="index.php?page=listuser">
 <tr>
 <td><input type="text" name="name" value='<?= $userInfo['username']; ?>'/></td>

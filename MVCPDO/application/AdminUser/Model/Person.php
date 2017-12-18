@@ -7,11 +7,22 @@ use Compassite\Model\DBConnection;
 class Person 
 {
     protected $name;
+
     protected $password;
+
     protected $email;
+
     protected $phoneNumber;
+
     protected $roleId;
     
+    CONST USERROLEID=2;
+
+    CONST ADMINROLEID=1;
+
+    CONST INACTIVE=0;
+
+    CONST ACTIVE=1;
     
     function __construct($name=null, $pwd=null, $email=null, $contact=null, $roleid=null) 
     {
@@ -63,10 +74,15 @@ class Person
     {
 
         $dbObj = new DBConnection();
+
         $userInfo = "select *from usersInformation where username='".$name."'";
+
         $result = $dbObj->pdo->prepare($userInfo);
+
         $result->execute();
+
         $userInfo = $result->fetchAll();
+        
         foreach ($userInfo as $key => $value) {
            return $value;
         }  
@@ -76,24 +92,32 @@ class Person
     public function getUserIdByname($uname) 
     {
         $dbObj = new DBConnection();
+
         $useridQry = "select uid from usersInformation where username='".$uname."'";
+
         $result = $dbObj->pdo->prepare($useridQry);
+
         $result->execute();
 
         $users = $result->fetchAll();
+
         foreach ($users as $key => $value) {
-            $userid = $value['uid'];
+            return $value['uid'];
         }
-        return $userid;
     }
     public function getUserById($uid) 
     {      
 
         $dbObj = new DBConnection();
+
         $useridQry = "select * from usersInformation where uid=".$uid."";
+
         $result = $dbObj->pdo->prepare($useridQry);
+
         $result->execute();
+
         $userInfo = $result->fetchAll();
+
         foreach ($userInfo as $key => $value) {
            return $value;
         }
@@ -103,11 +127,15 @@ class Person
     public function getUserByName($name) 
     {
         $dbObj = new DBConnection();
+
         $userqry = "select username,password,role_id,status from usersInformation where username = '".$name."'";
 
         $userResult = $dbObj->pdo->prepare($userqry);
+
         $userResult->execute();
+
         $userInfo = $userResult->fetchAll();
+
         foreach ($userInfo as $key => $value) {
            return $value;
         }     
@@ -116,6 +144,7 @@ class Person
     public function editProfile($uid, $name=null, $email=null, $contact=null) 
     {  
         $dbObj = new DBConnection();
+
         if($name) {
             $subqry = "username='$name',";
         }
@@ -127,7 +156,9 @@ class Person
         }
 
         $update_users_query = "UPDATE usersInformation set ".$subqry." where uid=".$uid."";
+
         $editResult = $dbObj->pdo->prepare($update_users_query); 
+
         return $editResult->execute();
     }
 
@@ -135,6 +166,7 @@ class Person
     {
 
         $dbObj = new DBConnection();
+
         $name = $person->name;
         $email = $person->email;
         $pwd = $person->password;
@@ -142,8 +174,10 @@ class Person
         $roleid = $person->roleId;
 
         $insert_users_query = "INSERT INTO usersInformation (username, password, email,contact,role_id,status)
-        VALUES ('$name','$pwd','$email','$contact',$roleid,1)";
+        VALUES ('$name','$pwd','$email','$contact',$roleid,".self::ACTIVE.")";
+
         $insertResult = $dbObj->pdo->prepare($insert_users_query); 
+
         return $insertResult->execute();
 
     }
@@ -151,9 +185,13 @@ class Person
     {
 
         $dbObj  = new DBConnection();
+
         $infoQry = "select password from usersInformation where password='".$password."'";
+
         $result = $dbObj->pdo->prepare($infoQry);
+
         $result->execute();
+
         $userInfo = $result->fetchAll();
 
         foreach ($userInfo as $key => $value) {
@@ -161,6 +199,7 @@ class Person
                 return true;
             }
         }
+
         return false;
 
     }
@@ -168,6 +207,7 @@ class Person
     {
 
         $dbObj = new DBConnection();
+        
         $infoQry = "UPDATE usersInformation set password='$password' where uid=".$uid."";
         
         $changepwdResult=$dbObj->pdo->prepare($infoQry); 

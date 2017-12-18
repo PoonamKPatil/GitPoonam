@@ -34,7 +34,6 @@ Password:<input type="password" name="password" value="<?= $_POST['password']?>"
 <input type="submit" name="login" value="LOGIN" class="submit">
 </span><br><br>
 <h2 class="error"><?= $error;?></h2>
-
 </form>
 </div>
 </body>

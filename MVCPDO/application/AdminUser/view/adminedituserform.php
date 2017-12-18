@@ -4,7 +4,9 @@
 <title>Edit profile</title>
 </head>
 <body>
-<form method="POST" action="index.php?page=adminedit&userid=<?= $user['uid'];?>>
+<br>
+<form method="POST" action="index.php?page=adminedit&userid=<?= $user['uid'];?>">
+
 Name:<input type="text" name="name" maxlength=20 value="<?= $user['username']?>" >
 <span class=error><?= $nameErr ?></span><br><br>
 
