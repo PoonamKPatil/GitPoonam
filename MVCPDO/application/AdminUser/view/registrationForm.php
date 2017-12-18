@@ -21,20 +21,34 @@ Registration form
 </head>
 <body>
 <form method="POST" action="index.php?page=registeruser">
-Name:<input type="text" name="name" maxlength=20 value="<?php echo $name?>">
-<span class=error>*<?= $emptyErrorMsg['name'] ?></span><br><br>
+Name:<input type="text" name="name" maxlength=20 value="<?= $_POST['name']?>">
+<span class=error>*
+<?= $emptyErrorMsg['name'] ?>
+<?= $nameErr ?>	
+</span><br><br>
 
-Password:<input type="password" name="password" value="<?php echo $password?>">
-<span class=error>*<?= $emptyErrorMsg['password'] ?></span><br><br>
+Password:<input type="password" name="password" value="<?= $_POST['password']?>">
+<span class=error>*
+<?= $emptyErrorMsg['password'] ?>
+<?= $passwordErr ?>		
+</span><br><br>
 
-confirm Password:<input type="password" name="confirmpassword" value="<?php echo $confirmpassword?>"><span class=error>*
-<?= $emptyErrorMsg['confirmpass'] ?>	</span><br><br>
+confirm Password:<input type="password" name="confirmpassword" value="<?= $_POST['confirmpassword']?>"><span class=error>*
+<?= $emptyErrorMsg['confirmpassword'] ?>
+<?= $confirmpasswordErr ?>			
+</span><br><br>
 
-Email:<input type="text" name="email" value="<?php echo $email?>">
-<span class=error>*<?= $emptyErrorMsg['email'] ?></span><br><br>
+Email:<input type="text" name="email" value="<?= $_POST['email']?>">
+<span class=error>*
+<?= $emptyErrorMsg['email'] ?>
+<?= $emailErr ?>			
+</span><br><br>
 
-Phone Number:<input type="text" name="contact" value="<?php echo $contact?>">
-<span class=error>*<?= $emptyErrorMsg['contact'] ?></span><br><br>
+Phone Number:<input type="text" name="contact" value="<?= $_POST['contact']?>">
+<span class=error>*
+<?= $emptyErrorMsg['contact'] ?>
+<?= $contactErr ?>			
+</span><br><br>
 <input type="submit" value="submit" name="submit" class="submit">
 </form>
 </body>

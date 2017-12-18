@@ -75,7 +75,6 @@ class Person
 
     public function getUserIdByname($uname) 
     {
-
         $dbObj = new DBConnection();
         $useridQry = "select uid from usersInformation where username='".$uname."'";
         $result = $dbObj->pdo->prepare($useridQry);
@@ -86,7 +85,6 @@ class Person
             $userid = $value['uid'];
         }
         return $userid;
-
     }
     public function getUserById($uid) 
     {      
@@ -104,7 +102,6 @@ class Person
 
     public function getUserByName($name) 
     {
-
         $dbObj = new DBConnection();
         $userqry = "select username,password,role_id,status from usersInformation where username = '".$name."'";
 
@@ -113,14 +110,11 @@ class Person
         $userInfo = $userResult->fetchAll();
         foreach ($userInfo as $key => $value) {
            return $value;
-        }
-
-        
+        }     
     }
 
     public function editProfile($uid, $name=null, $email=null, $contact=null) 
     {  
-
         $dbObj = new DBConnection();
         if($name) {
             $subqry = "username='$name',";
@@ -135,8 +129,8 @@ class Person
         $update_users_query = "UPDATE usersInformation set ".$subqry." where uid=".$uid."";
         $editResult = $dbObj->pdo->prepare($update_users_query); 
         return $editResult->execute();
-
     }
+
     public function insert(Person $person) 
     {
 
@@ -149,8 +143,7 @@ class Person
 
         $insert_users_query = "INSERT INTO usersInformation (username, password, email,contact,role_id,status)
         VALUES ('$name','$pwd','$email','$contact',$roleid,1)";
-        
-        $insertResult = $dbObj->pdo->prepare($update_users_query); 
+        $insertResult = $dbObj->pdo->prepare($insert_users_query); 
         return $insertResult->execute();
 
     }

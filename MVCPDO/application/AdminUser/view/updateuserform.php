@@ -14,10 +14,10 @@
 <?php foreach ($resultArr as $userInfo) : ?>  
 <form method="post" action="index.php?page=listuser">
 <tr>
-<td><input type="text" name="name" value='<?php echo $userInfo['username']; ?>'/></td>
-<td><input type="text" name="email" value='<?php echo $userInfo['email']; ?> '/></td>
-<td><input type="text" name="contact" value='<?php echo $userInfo['contact'];?>'/></td>
-<td><a href="index.php?page=adminedit&userid=<?php echo $userInfo['uid'];?>">Edit</a> </td>
+<td><input type="text" name="name" value='<?= $userInfo['username']; ?>'/></td>
+<td><input type="text" name="email" value='<?= $userInfo['email']; ?> '/></td>
+<td><input type="text" name="contact" value='<?= $userInfo['contact'];?>'/></td>
+<td><a href="index.php?page=adminedit&userid=<?= $userInfo['uid'];?>">Edit</a> </td>
 <?php 
 if ($userInfo['status']==INACTIVE) : ?>
 <td><input type="submit" name="enable" value="Enable"></td>
@@ -27,7 +27,7 @@ else :?>
 <?php endif; ?>
 <td> <input type="submit" name="delete" value="Delete">
 </td>
-<td><input type="hidden" name="oldname" value="<?php echo $rows['username']?>" ></td>
+<td><input type="hidden" name="oldname" value="<?= $rows['username']?>" ></td>
 </tr>
 </form>
 <?php endforeach;?>

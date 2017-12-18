@@ -5,7 +5,7 @@ namespace Compassite\controller;
 use Compassite\Model\Admin;
 use Compassite\Model\User;
 use Compassite\Model\Person;
-use Compassite\Model\Validationn;
+use Compassite\Model\Validation;
 
 class AdminController
 {
@@ -13,7 +13,7 @@ class AdminController
     {  
         $adminObj = new Admin();
         if(isset($_POST['login'])) {
-           $doValidate  =  new Validationn($_POST);  
+           $doValidate  =  new Validation($_POST);  
            $emptyErrorMsg = $doValidate->getError();
         }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,7 +35,7 @@ class AdminController
                     }
             }
         }
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/AdminLoginPage.php"); 
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminLoginPage.php"); 
         
     }
     
@@ -43,7 +43,6 @@ class AdminController
     {
         $adminObj = new Admin();
         $user=$adminObj->viewProfile($_SESSION['admin_username']);
-
 
         if (isset($_POST['submit'])) {
             if (!empty($_POST['newpassword']) && 
@@ -60,13 +59,10 @@ class AdminController
                     }
             } else {
                 $error = "empty field or new password and confirm password doesnt match";
-            }
-             
-   
+            }       
         }
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/adminchangepassword.php");
-       
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/admindashboard.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/adminchangepassword.php");
     }
 
     public function adminEditUser() 
@@ -84,45 +80,43 @@ class AdminController
                     header("location:".APP_URL."/index.php?page=listuser");
                 }
         }
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser//view/adminedituserform.php");
-        
-
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/admindashboard.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser//view/adminedituserform.php");
     }
 
     public function updateUser()
     {
+        $adminObj = new Admin();
+        $resultArr = $adminObj->getUsers();
+        if (isset($_POST['enable'])) {
             $adminObj = new Admin();
-            $resultArr = $adminObj->getUsers();
-            if (isset($_POST['enable'])) {
-                $adminObj = new Admin();
-                $uid=$adminObj->getUserIdByname($_POST['name']);
-                if ($adminObj->enableUser($uid)) {
-                    $msg = $_POST['name']." Succesfuuly disabled";
-                } else {
-                    $msg = $_POST['name']."Error while disabeling";
-                }
+            $uid=$adminObj->getUserIdByname($_POST['name']);
+            if ($adminObj->enableUser($uid)) {
+                $msg = $_POST['name']." Succesfuuly disabled";
+            } else {
+                $msg = $_POST['name']."Error while disabeling";
             }
-            if (isset($_POST['disable'])) {
-                $adminObj = new Admin();
-                $uid = $adminObj->getUserIdByname($_POST['name']);
-                if ($adminObj->disableUser($uid)) {
-                    $msg = $_POST['name']." Succesfuuly enabled";
-                } else {
-                    $msg=$_POST['name']."Error while enabeling";
-                }
-            }  
-            if (isset($_POST['delete'])) {
-                $adminObj = new Admin();
-                $uid = $adminObj->getUserIdByname($_POST['name']);
-                if ($adminObj->deleteUser($uid)) {
-                    $msg = $_POST['name']." Succesfuuly deleted";
-                } else {
-                    $msg = $_POST['name']." Error while deleting";
-                }
+        }
+        if (isset($_POST['disable'])) {
+            $adminObj = new Admin();
+            $uid = $adminObj->getUserIdByname($_POST['name']);
+            if ($adminObj->disableUser($uid)) {
+                $msg = $_POST['name']." Succesfuuly enabled";
+            } else {
+                $msg=$_POST['name']."Error while enabeling";
             }
-            include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/admindashboard.php");
-             include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/updateuserform.php");    
+        }  
+        if (isset($_POST['delete'])) {
+            $adminObj = new Admin();
+            $uid = $adminObj->getUserIdByname($_POST['name']);
+            if ($adminObj->deleteUser($uid)) {
+                $msg = $_POST['name']." Succesfuuly deleted";
+            } else {
+                $msg = $_POST['name']." Error while deleting";
+            }
+        }
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/admindashboard.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/updateuserform.php");    
     }
 
 

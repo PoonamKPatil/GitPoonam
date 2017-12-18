@@ -1,5 +1,6 @@
 <?php
-namespace Compassite\model;
+namespace Compassite\Model;
+
 class DBConnection 
 {
 
@@ -16,7 +17,6 @@ class DBConnection
     
     public function __construct() 
     {
-
         try
         {
             $this->pdo = new \PDO("mysql:host=localhost;dbname=loginTest_db",

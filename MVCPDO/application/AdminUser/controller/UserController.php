@@ -4,14 +4,14 @@ namespace Compassite\controller;
 use Compassite\Model\Person;
 use Compassite\Model\Admin;
 use Compassite\Model\User;
-use Compassite\Model\Validationn;
+use Compassite\Model\Validation;
 
 class  UserController
 {
     public function loginValidation() 
     {
         if(isset($_POST['login'])) {
-           $doValidate  =  new Validationn($_POST);  
+           $doValidate  =  new Validation($_POST);  
            $emptyErrorMsg = $doValidate->getError();
         }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -29,10 +29,9 @@ class  UserController
                   } 
   
         }
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/UserLoginPage.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserLoginPage.php");
 
     }
-
 
     public function userChangePassword()
     {   
@@ -60,24 +59,32 @@ class  UserController
                     $msg = "empty field or new password and confirm password doesnt match";
                 }
            }
-           include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userdashboard.php");
-           include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userchangepassword.php");
-        
-
+           include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userdashboard.php");
+           include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userchangepassword.php");
     }
-
 
     public function registerUser()
     {
         if(isset($_POST['submit'])) {
-           $doValidate  =  new Validationn($_POST);  
+           $doValidate  =  new Validation($_POST);  
            $emptyErrorMsg = $doValidate->getError();
+           
+           if (empty($emptyErrorMsg)) {
+
+               $contactErr = $doValidate->validMobile($_POST['contact']);
+               $emailErr = $doValidate->validEmail($_POST['email']);
+               $nameErr = $doValidate->validName($_POST['name']);
+           }
+           
+           if ($_POST['password']!=$_POST['confirmpassword']) {
+               $confirmpasswordErr = "Password MissMatch";
+           }
         }
         if (isset($_POST['submit']) && 
             empty($emptyErrorMsg) && 
             empty($emailErr) && 
             empty($contactErr) && 
-            empty($passwordErr) && 
+            empty($nameErr) &&
             empty($confirmpasswordErr)
            ) {
                $person = new Person($_POST['name'],md5($_POST['password']),$_POST['email'],$_POST['contact'],2);
@@ -85,43 +92,36 @@ class  UserController
                    header("location:".APP_URL."/index.php?page=userlogin&msg=Registered successfully !! login here");
                 }
         }
-        include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/registrationForm.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/registrationForm.php");
     }
 
     public function viewProfile()
-    {
-            include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userdashboard.php");
-
-            echo "<h3 style=\"color:#4CAF50\";>Your Details:</h3>";
-            $userObj = new Person();
-            $user = $userObj->viewProfile($_SESSION['username']);
-
-            echo "Name:".$user['username'];
-            echo "<br>Email:".$user['email'];
-            echo "<br>Contact:".$user['contact'];
-         
+    {   
+        $userObj = new Person();
+        $user = $userObj->viewProfile($_SESSION['username']);
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userdashboard.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/viewProfile.php");        
     }
 
-
     public function editUser()
-    {
-            
-            $userObj = new User();
-            $user = $userObj->viewProfile($_SESSION['username']);
-            $uid = $userObj->getUserIdByname($_SESSION['username']);
-            if (isset($_POST['submit']) && 
-                empty($nameErr) && 
-                empty($emailErr) && 
-                empty($conatctErr)
-               ) {
-                   if ($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
-                       $_SESSION['username'] = $_POST['name'];
-                       $successmsg = "succesffuly updated";
-                    }
-            }
-            include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/userdashboard.php");
+    {      
+        $userObj = new User();
+        $user = $userObj->viewProfile($_SESSION['username']);
+        $uid = $userObj->getUserIdByname($_SESSION['username']);
 
-            include("/var/www/html/Php-Programs/MVCadminuser2/application/AdminUser/view/edituserform.php");
+        if (isset($_POST['submit']) && 
+            empty($nameErr) && 
+            empty($emailErr) && 
+            empty($conatctErr)
+            ) {
+            if ($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
+                $_SESSION['username'] = $_POST['name'];
+                $successmsg = "succesffuly updated";
+            }
+        }
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userdashboard.php");
+
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/edituserform.php");
     }
 
 }

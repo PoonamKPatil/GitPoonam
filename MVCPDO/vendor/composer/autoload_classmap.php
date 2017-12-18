@@ -11,7 +11,6 @@ return array(
     'Compassite\\Model\\Person' => $baseDir . '/application/AdminUser/Model/Person.php',
     'Compassite\\Model\\User' => $baseDir . '/application/AdminUser/Model/User.php',
     'Compassite\\Model\\Validation' => $baseDir . '/application/AdminUser/Model/Validation.php',
-    'Compassite\\Model\\Validationn' => $baseDir . '/application/AdminUser/Model/Validationn.php',
     'Compassite\\controller\\AdminController' => $baseDir . '/application/AdminUser/controller/AdminController.php',
     'Compassite\\controller\\AdminDashboard' => $baseDir . '/application/AdminUser/controller/AdminDashboard.php',
     'Compassite\\controller\\HomeController' => $baseDir . '/application/AdminUser/controller/HomeController.php',

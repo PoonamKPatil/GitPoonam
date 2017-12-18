@@ -26,7 +26,6 @@ class ComposerStaticInit825f4254ac8ac80848b27c6818c212a0
         'Compassite\\Model\\Person' => __DIR__ . '/../..' . '/application/AdminUser/Model/Person.php',
         'Compassite\\Model\\User' => __DIR__ . '/../..' . '/application/AdminUser/Model/User.php',
         'Compassite\\Model\\Validation' => __DIR__ . '/../..' . '/application/AdminUser/Model/Validation.php',
-        'Compassite\\Model\\Validationn' => __DIR__ . '/../..' . '/application/AdminUser/Model/Validationn.php',
         'Compassite\\controller\\AdminController' => __DIR__ . '/../..' . '/application/AdminUser/controller/AdminController.php',
         'Compassite\\controller\\AdminDashboard' => __DIR__ . '/../..' . '/application/AdminUser/controller/AdminDashboard.php',
         'Compassite\\controller\\HomeController' => __DIR__ . '/../..' . '/application/AdminUser/controller/HomeController.php',
