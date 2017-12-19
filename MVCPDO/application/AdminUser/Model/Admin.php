@@ -10,44 +10,38 @@ class Admin extends Person
 
     public function disableUser($uid) 
     {
-        $dbObj = new DBConnection();
-
         $disable_users_query = "UPDATE usersInformation set status=".self::INACTIVE." where uid=".$uid."";
 
-        $result = $dbObj->pdo->prepare($disable_users_query);
+        $result = $this->dbObj->pdo->prepare($disable_users_query);
 
         return $result->execute();
     }
 
     public function enableUser($uid)
     {
-        $dbObj = new DBConnection();
-
+        
         $enable_users_query = "UPDATE usersInformation set status=".self::ACTIVE." where uid=".$uid."";
 
-        $result = $dbObj->pdo->prepare($enable_users_query);
+        $result = $this->dbObj->pdo->prepare($enable_users_query);
 
         return $result->execute();
     }
 
     public function deleteUser($uid) 
     {
-        $dbObj = new DBConnection();
 
         $delete_users_query = "DELETE from usersInformation where uid=".$uid."";
 
-        $result = $dbObj->pdo->prepare($delete_users_query);
+        $result = $this->dbObj->pdo->prepare($delete_users_query);
 
         return $result->execute();
     }
 
     public function getUsers() 
     {
-        $dbObj = new DBConnection();
-
         $userQry = "select uid,username,email,contact,status from usersInformation where role_id=".self::USERROLEID."";
 
-        $result = $dbObj->pdo->prepare($userQry);
+        $result = $this->dbObj->pdo->prepare($userQry);
 
         $result->execute();
 

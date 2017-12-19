@@ -14,28 +14,51 @@ include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews
 <th>Email</th>
 <th>Phone Number</th>
 </tr>
+
 <?php foreach ($users as $userInfo) : ?>  
-<form method="post" action="index.php?page=listuser">
-<tr>
+<tr>	
+<form method="POST" action="index.php?page=listuser">
 <td><input type="text" name="name" value='<?= $userInfo['username']; ?>'/></td>
 <td><input type="text" name="email" value='<?= $userInfo['email']; ?> '/></td>
 <td><input type="text" name="contact" value='<?= $userInfo['contact'];?>'/></td>
-<td><a href="index.php?page=adminedit&userid=<?= $userInfo['uid'];?>">Edit</a> </td>
+<td><a href="index.php?page=edituser&userid=<?= $userInfo['uid'];?>">Edit</a> </td>
+</form>
+
 <?php 
 if ($userInfo['status']==0) : ?>
-<td><input type="submit" name="enable" value="Enable"></td>
+<td>
+<form method="POST" action="index.php?page=user">
+<input type="hidden" name="action" value="enable">
+<input type="hidden" name="userid" value="<?=$userInfo['uid'];?>">
+<input type="submit" name="enable" value="MakeEnable">
+</form>
+</td>
+
 <?php 
 else :?>
-<td><input type="submit" name="disable" value="Disable"></td>
-<?php endif; ?>
-<td> <input type="submit" name="delete" value="Delete">
-</td>
-<td><input type="hidden" name="oldname" value="<?= $rows['username']?>" ></td>
-</tr>
+<td>
+<form method="POST" action="index.php?page=user">
+<input type="hidden" name="action" value="disable">
+<input type="hidden" name="userid" value="<?=$userInfo['uid'];?>">
+<input type="submit" name="disable" value="MakeDisable">
 </form>
+</td>
+<?php endif; ?>
+
+<td> 
+<form method="POST" action="index.php?page=user">
+<input type="hidden" name="action" value="delete">
+<input type="hidden" name="userid" value="<?=$userInfo['uid'];?>">
+<input type="submit" name="delete" value="Delete">
+</form>
+</td>
+
 <?php endforeach;?>
+
+</tr>
 </tbody>
 </table>
-<?= $msg ?>
+
+<?= $message ?>
 </body>
 </html>

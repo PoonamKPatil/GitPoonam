@@ -8,7 +8,8 @@ define("APP_URL", 'http://localhost/Php-Programs/MVCPDO');
 
 
 //admin
-if ($_GET['page']=='login') {
+
+if ($_GET['page'] == 'login') {
 
 	$viewObj = new Compassite\controller\AdminController();
 
@@ -16,7 +17,7 @@ if ($_GET['page']=='login') {
 
 }
 
-if ($_GET['page']=='dashaboard') {
+if ($_GET['page'] == 'dashaboard') {
 
 	$viewObj = new Compassite\controller\AdminDashboard();
 
@@ -24,16 +25,44 @@ if ($_GET['page']=='dashaboard') {
 
 }
 
-if ($_GET['page']=='listuser') {
+if ($_GET['page'] == 'listuser') {
 
 	$adminObj = new Compassite\controller\AdminController();
 
-	$adminObj->updateUser();
-
+	$adminObj->listUsers();
 
 }
 
-if ($_GET['page']=='changepwd') {
+if ($_GET['page'] == 'user') {
+	
+	if ($_POST['action']=='delete') {
+
+	    $adminObj = new Compassite\controller\AdminController();
+
+	    $adminObj->deleteUser();
+
+    }
+
+    if ($_POST['action'] == 'disable') {
+
+	    $adminObj = new Compassite\controller\AdminController();
+
+	    $adminObj->disableUser();
+
+    }
+
+    if ($_POST['action'] == 'enable') {
+
+	    $adminObj = new Compassite\controller\AdminController();
+
+	    $adminObj->enableUser();
+
+    }
+    
+}
+
+
+if ($_GET['page'] == 'changepwd') {
 
 	$viewObj = new Compassite\controller\AdminController();
 
@@ -41,17 +70,18 @@ if ($_GET['page']=='changepwd') {
 
 }
 
-if ($_GET['page']=='adminedit') {
+if ($_GET['page'] == 'edituser') {
 
 	$viewObj = new Compassite\controller\AdminController();
 
-	$viewObj->adminEditUser();
+	$viewObj->editUser();
 
 }
 
 
 //user
-if ($_GET['page']=='registeruser') {
+
+if ($_GET['page'] == 'registeruser') {
 
 	$viewObj = new Compassite\controller\UserController();
 
@@ -59,7 +89,7 @@ if ($_GET['page']=='registeruser') {
 
 }
 
-if ($_GET['page']=='userlogin') {
+if ($_GET['page'] == 'userlogin') {
 
 	$viewObj = new Compassite\controller\UserController();
 
@@ -67,7 +97,7 @@ if ($_GET['page']=='userlogin') {
 
 }
 
-if ($_GET['page']=='userdashboard') {
+if ($_GET['page'] == 'userdashboard') {
 
 	$viewObj = new Compassite\controller\UserDashboard();
 
@@ -75,7 +105,7 @@ if ($_GET['page']=='userdashboard') {
 
 }
 
-if ($_GET['page']=='viewprofile') {
+if ($_GET['page'] == 'viewprofile') {
 
 	$viewObj = new Compassite\controller\UserController();
 
@@ -83,7 +113,7 @@ if ($_GET['page']=='viewprofile') {
 
 }
 
-if ($_GET['page']=='editprofile') {
+if ($_GET['page'] == 'editprofile') {
 
 	$viewObj = new Compassite\controller\UserController();
 
@@ -91,7 +121,7 @@ if ($_GET['page']=='editprofile') {
 
 }
 
-if ($_GET['page']=='userchangepwd') {
+if ($_GET['page'] == 'userchangepwd') {
 
 	$viewObj = new Compassite\controller\UserController();
 
@@ -99,7 +129,7 @@ if ($_GET['page']=='userchangepwd') {
 
 }
 
-if ($_GET['page']=='logout') {
+if ($_GET['page'] == 'logout') {
 
 	$viewObj = new Compassite\controller\LogoutController();
 
@@ -107,7 +137,7 @@ if ($_GET['page']=='logout') {
 
 }
 
-if ($_GET['page']=='home') {
+if ($_GET['page'] == 'home') {
 
 	$viewObj = new Compassite\controller\HomeController();
 

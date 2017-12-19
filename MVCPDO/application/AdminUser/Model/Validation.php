@@ -4,11 +4,11 @@ namespace Compassite\Model;
 class Validation
 {
 
-    public $expectedInput = array("name","password","contact","email","confirmpassword");
+    private $expectedInput = array("name","password","contact","email","confirmpassword");
 
-    public $inputData ;
+    private $inputData ;
 
-    public $errorMessage;
+    private $errorMessage;
 
 
     function __construct($inputValue)

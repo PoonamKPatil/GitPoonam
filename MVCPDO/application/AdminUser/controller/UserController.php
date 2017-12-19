@@ -8,7 +8,12 @@ use Compassite\Model\Validation;
 
 class  UserController
 {
-    
+    private $userObj;
+
+    function __construct()
+    {
+        $this->userObj = new User();
+    }
     public function loginValidation() 
     {
         if(isset($_POST['login'])) {
@@ -23,9 +28,7 @@ class  UserController
 
             if (empty($emptyErrorMsg)) {  
 
-                $userObj = new User();
-
-                $result = $userObj->getUserByName($_POST['name']);
+                $result = $this->userObj->getUserByName($_POST['name']);
 
                 if ($result['role_id'] == Person::ADMINROLEID) {
 
@@ -57,7 +60,6 @@ class  UserController
 
     public function userChangePassword()
     {   
-        $userObj = new User();
 
         if (isset($_POST['submit'])) {
 
@@ -67,11 +69,11 @@ class  UserController
                ($_POST['newpassword'] == $_POST['confirmpassword'])
               ) {
 
-                if($userObj->checkPassword(md5($_POST['oldpassword']))) {
+                if($this->userObj->checkPassword(md5($_POST['oldpassword']))) {
           
-                    $uid = $userObj->getUserIdByname($_SESSION['username']);
+                    $uid = $this->userObj->getUserIdByname($_SESSION['username']);
                 
-                    $userObj->changePassword($uid,md5($_POST['newpassword']));
+                    $this->userObj->changePassword($uid,md5($_POST['newpassword']));
 
                     header("location:".APP_URL."/index.php?page=userlogin&msg=Password changed!! login again");
 
@@ -120,7 +122,8 @@ class  UserController
             empty($nameErr) &&
             empty($confirmpasswordErr)
            ) {
-            $person = new Person($_POST['name'],md5($_POST['password']),$_POST['email'],$_POST['contact'],2);
+
+            $person = new Person($_POST['name'],md5($_POST['password']),$_POST['email'],$_POST['contact'],Person::USERROLEID);
 
             if($person->insert($person)) {
 
@@ -135,20 +138,16 @@ class  UserController
 
     public function viewProfile()
     {   
-        $userObj = new Person();
-
-        $user = $userObj->viewProfile($_SESSION['username']);
+        $user = $this->userObj->viewProfile($_SESSION['username']);
 
         include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/viewProfile.php");        
     }
 
     public function editUser()
     {      
-        $userObj = new User();
+        $user = $this->userObj->viewProfile($_SESSION['username']);
 
-        $user = $userObj->viewProfile($_SESSION['username']);
-
-        $uid = $userObj->getUserIdByname($_SESSION['username']);
+        $uid = $this->userObj->getUserIdByname($_SESSION['username']);
 
 
         if (isset($_POST['submit']) && 
@@ -156,14 +155,14 @@ class  UserController
             empty($emailErr) && 
             empty($conatctErr)
             ) {
-            if ($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
+            if ($this->userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
                 
                 $_SESSION['username'] = $_POST['name'];
 
                 $successmsg = "succesffuly updated";
             }
         }
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/edituserform.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/editform.php");
     }
 
 }

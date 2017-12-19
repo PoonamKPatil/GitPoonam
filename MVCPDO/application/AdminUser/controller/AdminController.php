@@ -1,5 +1,4 @@
 <?php
-
 namespace Compassite\controller;
 
 use Compassite\Model\Admin;
@@ -9,10 +8,17 @@ use Compassite\Model\Validation;
 
 class AdminController
 {
+    private $msg;
+    private $adminObj;
+
+    function __construct() 
+    {
+        $this->adminObj = new Admin();
+    }
+
     public function loginValidation()
     {  
-        $adminObj = new Admin();
-
+       
         if(isset($_POST['login'])) {
 
             $doValidate  =  new Validation($_POST);  
@@ -25,9 +31,8 @@ class AdminController
 
             if (empty($emptyErrorMsg)) {
 
-                    try {
-                        
-                        $user = $adminObj->getUserByName($_POST['name']);
+                try {                      
+                        $user = $this->adminObj->getUserByName($_POST['name']);
 
                         if ($user['role_id'] == Person::USERROLEID) {
 
@@ -48,10 +53,10 @@ class AdminController
 
                         } 
 
-                    } catch (Exception $ex) {
+                } catch (\Exception $ex) {
 
                         echo $e->getMessage();
-                    }
+                }
             }
         }
 
@@ -60,7 +65,6 @@ class AdminController
     
     public function adminChangePassword()
     {
-        $adminObj = new Admin();
 
         if (isset($_POST['submit'])) {
 
@@ -70,11 +74,11 @@ class AdminController
                 ($_POST['newpassword'] == $_POST['confirmpassword'])
                 ) {
 
-                    if ($adminObj->checkPassword(md5($_POST['oldpassword']))) {
+                    if ($this->adminObj->checkPassword(md5($_POST['oldpassword']))) {
 
-                        $uid = $adminObj->getUserIdByname($_SESSION['admin_username']);
+                        $uid = $this->adminObj->getUserIdByname($_SESSION['admin_username']);
 
-                        $adminObj->changePassword($uid,md5($_POST['newpassword']));
+                        $this->adminObj->changePassword($uid,md5($_POST['newpassword']));
 
                         header("location:".APP_URL."/index.php?page=login&msg=Password changed!! login again");
 
@@ -96,7 +100,7 @@ class AdminController
         include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/adminchangepassword.php");
     }
 
-    public function adminEditUser() 
+    public function editUser() 
     {
         $uid = $_GET['userid'];
 
@@ -104,84 +108,92 @@ class AdminController
 
         $user = $userObj->getUserById($uid);
 
-        if (isset($_POST['submit']) && 
-            empty($nameErr) && 
-            empty($emailErr) && 
-            empty($conatctErr)
-            ) {
+        if (isset($_POST['submit'])) {
 
-                if ($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
+            if ($userObj->editProfile($uid,$_POST['name'],$_POST['email'],$_POST['contact'])) {
 
-                    header("location:".APP_URL."/index.php?page=listuser");
+                header("location:".APP_URL."/index.php?page=listuser");
 
-                    exit();
+                exit();
 
-                }
+            }
         }
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/adminedituserform.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/edituserform.php");
 
     }
 
-    public function updateUser()
+    public function listUsers()
     {
-        $adminObj = new Admin();
 
-        $users = $adminObj->getUsers();
+        $users = $this->adminObj->getUsers();
 
-        if (isset($_POST['enable'])) {
+        $message=$this->msg;
 
-            $adminObj = new Admin();
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/updateuserform.php");   
+    }
 
-            $uid = $adminObj->getUserIdByname($_POST['name']);
+    public function deleteUser()
+    {
+        if (isset($_POST['delete'])) {
 
-            if ($adminObj->enableUser($uid)) {
+            $uid = $_POST['userid'];
 
-                $msg = $_POST['name']." Succesfuuly disabled";
+            if ($this->adminObj->deleteUser($uid)) {
+
+                $this->msg = $_POST['name']." Succesfuuly deleted";
 
             } else {
 
-                $msg = $_POST['name']."Error while disabeling";
+                $this->msg = $_POST['name']." Error while deleting";
             }
 
         }
 
+        $this->listUsers();    
+    }
+    
+    public function disableUser()
+    {
+
         if (isset($_POST['disable'])) {
 
-            $adminObj = new Admin();
+            $uid = $_POST['userid'];
 
-            $uid = $adminObj->getUserIdByname($_POST['name']);
+            if ($this->adminObj->disableUser($uid)) {
 
-            if ($adminObj->disableUser($uid)) {
-
-                $msg = $_POST['name']." Succesfuuly enabled";
+                $this->msg = $_POST['name']." Succesfuuly disabled";
 
             } else {
 
-                $msg = $_POST['name']."Error while enabeling";
+                $this->msg = $_POST['name']."Error while disabling";
             }
 
         }  
 
-        if (isset($_POST['delete'])) {
+        $this->listUsers();    
 
-            $adminObj = new Admin();
+    }
 
-            $uid = $adminObj->getUserIdByname($_POST['name']);
+    public function enableUser()
+    {
+        if (isset($_POST['enable'])) {
 
-            if ($adminObj->deleteUser($uid)) {
+            $uid = $_POST['userid'];
 
-                $msg = $_POST['name']." Succesfuuly deleted";
+            if ($this->adminObj->enableUser($uid)) {
+
+                $this->msg = $_POST['name']." Succesfuuly enabled";
 
             } else {
 
-                $msg = $_POST['name']." Error while deleting";
+                $this->msg = $_POST['name']."Error while enabeling";
             }
 
         }
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/updateuserform.php");    
-    }
+        $this->listUsers();  
 
+    }
 
 }

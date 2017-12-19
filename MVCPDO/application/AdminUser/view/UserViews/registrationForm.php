@@ -1,6 +1,3 @@
-<?php
-include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/userdashboard.php");
-?>
 <DOCTYPE html!>
 <html>
 <head>

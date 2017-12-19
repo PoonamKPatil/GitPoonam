@@ -8,7 +8,7 @@ include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews
 </head>
 <body>
 <br>
-<form method="POST" action="index.php?page=adminedit&userid=<?= $user['uid'];?>">
+<form method="POST" action="index.php?page=edituser">
 
 Name:<input type="text" name="name" maxlength=20 value="<?= $user['username']?>" >
 <span class=error><?= $nameErr ?></span><br><br>
