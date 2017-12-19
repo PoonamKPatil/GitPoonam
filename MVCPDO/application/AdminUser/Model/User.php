@@ -8,4 +8,3 @@ class User extends Person
 
 	
 }
-?>

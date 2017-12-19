@@ -105,6 +105,7 @@ class Person
             return $value['uid'];
         }
     }
+
     public function getUserById($uid) 
     {      
 
@@ -149,10 +150,10 @@ class Person
             $subqry = "username='$name',";
         }
         if ($email) {
-            $subqry.="email='$email',";
+            $subqry.= "email='$email',";
         }
         if ($contact) {
-            $subqry.="contact=$contact";
+            $subqry.= "contact=$contact";
         }
 
         $update_users_query = "UPDATE usersInformation set ".$subqry." where uid=".$uid."";
@@ -181,10 +182,11 @@ class Person
         return $insertResult->execute();
 
     }
+
     public function checkPassword($password)
     {
 
-        $dbObj  = new DBConnection();
+        $dbObj = new DBConnection();
 
         $infoQry = "select password from usersInformation where password='".$password."'";
 
@@ -203,6 +205,7 @@ class Person
         return false;
 
     }
+
     public function changePassword($uid, $password)
     {
 
@@ -210,7 +213,7 @@ class Person
         
         $infoQry = "UPDATE usersInformation set password='$password' where uid=".$uid."";
         
-        $changepwdResult=$dbObj->pdo->prepare($infoQry); 
+        $changepwdResult = $dbObj->pdo->prepare($infoQry); 
         
         return $changepwdResult->execute();
         

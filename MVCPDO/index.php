@@ -15,6 +15,7 @@ if ($_GET['page']=='login') {
 	$viewObj->loginValidation();
 
 }
+
 if ($_GET['page']=='dashaboard') {
 
 	$viewObj = new Compassite\controller\AdminDashboard();
@@ -22,6 +23,7 @@ if ($_GET['page']=='dashaboard') {
 	$viewObj->dashboard();
 
 }
+
 if ($_GET['page']=='listuser') {
 
 	$adminObj = new Compassite\controller\AdminController();
@@ -30,6 +32,7 @@ if ($_GET['page']=='listuser') {
 
 
 }
+
 if ($_GET['page']=='changepwd') {
 
 	$viewObj = new Compassite\controller\AdminController();
@@ -95,6 +98,7 @@ if ($_GET['page']=='userchangepwd') {
 	$viewObj->userChangePassword();
 
 }
+
 if ($_GET['page']=='logout') {
 
 	$viewObj = new Compassite\controller\LogoutController();

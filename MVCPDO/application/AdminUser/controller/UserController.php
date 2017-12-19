@@ -37,11 +37,13 @@ class  UserController
                 }
 
                 if ($result['password'] == md5($_POST['password']) && 
-                    $result['status']==Person::ACTIVE) {
+                    $result['status'] == Person::ACTIVE) {
 
                     $_SESSION['username'] = $_POST['name'];
 
                     header("location:".APP_URL."/index.php?page=userdashboard");
+
+                    exit();
 
                 } 
                     
@@ -49,7 +51,7 @@ class  UserController
   
         }
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserLoginPage.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/UserLoginPage.php");
 
     }
 
@@ -73,6 +75,8 @@ class  UserController
 
                     header("location:".APP_URL."/index.php?page=userlogin&msg=Password changed!! login again");
 
+                    exit();
+
                 } else {
 
                     $passerror = "Incorrect password";
@@ -83,9 +87,7 @@ class  UserController
                   $msg = "empty field or new password and confirm password doesnt match";
               }
         }
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userdashboard.php");
-
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userchangepassword.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/userchangepassword.php");
     }
 
     public function registerUser()
@@ -105,7 +107,7 @@ class  UserController
                 $nameErr = $doValidate->validName($_POST['name']);
             }
            
-            if ($_POST['password']!=$_POST['confirmpassword']) {
+            if ($_POST['password'] != $_POST['confirmpassword']) {
 
                 $confirmpasswordErr = "Password MissMatch";
 
@@ -123,11 +125,12 @@ class  UserController
             if($person->insert($person)) {
 
                 header("location:".APP_URL."/index.php?page=userlogin&msg=Registered successfully !! login here");
+                exit();
             }
 
         }
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/registrationForm.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/registrationForm.php");
     }
 
     public function viewProfile()
@@ -136,9 +139,7 @@ class  UserController
 
         $user = $userObj->viewProfile($_SESSION['username']);
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userdashboard.php");
-        
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/viewProfile.php");        
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/viewProfile.php");        
     }
 
     public function editUser()
@@ -162,10 +163,7 @@ class  UserController
                 $successmsg = "succesffuly updated";
             }
         }
-
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/userdashboard.php");
-
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/edituserform.php");
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/UserViews/edituserform.php");
     }
 
 }

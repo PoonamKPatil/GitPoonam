@@ -45,7 +45,7 @@ class Admin extends Person
     {
         $dbObj = new DBConnection();
 
-        $userQry ="select uid,username,email,contact,status from usersInformation where role_id=".self::USERROLEID."";
+        $userQry = "select uid,username,email,contact,status from usersInformation where role_id=".self::USERROLEID."";
 
         $result = $dbObj->pdo->prepare($userQry);
 

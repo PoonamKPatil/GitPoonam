@@ -44,6 +44,8 @@ class AdminController
 
                             header("location:".APP_URL."/index.php?page=dashaboard");
 
+                            exit();
+
                         } 
 
                     } catch (Exception $ex) {
@@ -53,7 +55,7 @@ class AdminController
             }
         }
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminLoginPage.php");        
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/AdminLoginPage.php");        
     }
     
     public function adminChangePassword()
@@ -70,11 +72,13 @@ class AdminController
 
                     if ($adminObj->checkPassword(md5($_POST['oldpassword']))) {
 
-                        $uid=$adminObj->getUserIdByname($_SESSION['admin_username']);
+                        $uid = $adminObj->getUserIdByname($_SESSION['admin_username']);
 
                         $adminObj->changePassword($uid,md5($_POST['newpassword']));
 
                         header("location:".APP_URL."/index.php?page=login&msg=Password changed!! login again");
+
+                        exit();
 
                     } else {
 
@@ -88,9 +92,8 @@ class AdminController
 
             }       
         }
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/admindashboard.php");
-        
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/adminchangepassword.php");
+
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/adminchangepassword.php");
     }
 
     public function adminEditUser() 
@@ -111,13 +114,13 @@ class AdminController
 
                     header("location:".APP_URL."/index.php?page=listuser");
 
+                    exit();
+
                 }
         }
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/admindashboard.php");
-        
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser//view/adminedituserform.php");
-        
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/adminedituserform.php");
+
     }
 
     public function updateUser()
@@ -130,7 +133,7 @@ class AdminController
 
             $adminObj = new Admin();
 
-            $uid=$adminObj->getUserIdByname($_POST['name']);
+            $uid = $adminObj->getUserIdByname($_POST['name']);
 
             if ($adminObj->enableUser($uid)) {
 
@@ -155,7 +158,7 @@ class AdminController
 
             } else {
 
-                $msg=$_POST['name']."Error while enabeling";
+                $msg = $_POST['name']."Error while enabeling";
             }
 
         }  
@@ -177,9 +180,7 @@ class AdminController
 
         }
 
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/admindashboard.php");
-        
-        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/updateuserform.php");    
+        include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/updateuserform.php");    
     }
 
 

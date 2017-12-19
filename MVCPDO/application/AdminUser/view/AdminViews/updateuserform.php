@@ -1,3 +1,6 @@
+<?php
+include("/var/www/html/Php-Programs/MVCPDO/application/AdminUser/view/AdminViews/admindashboard.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +22,7 @@
 <td><input type="text" name="contact" value='<?= $userInfo['contact'];?>'/></td>
 <td><a href="index.php?page=adminedit&userid=<?= $userInfo['uid'];?>">Edit</a> </td>
 <?php 
-if ($userInfo['status']==INACTIVE) : ?>
+if ($userInfo['status']==0) : ?>
 <td><input type="submit" name="enable" value="Enable"></td>
 <?php 
 else :?>
