@@ -9,6 +9,7 @@ use Compassite\Model\Validation;
 class AdminController
 {
     private $msg;
+
     private $adminObj;
 
     function __construct() 
@@ -74,6 +75,8 @@ class AdminController
                 ($_POST['newpassword'] == $_POST['confirmpassword'])
                 ) {
 
+                try
+                {
                     if ($this->adminObj->checkPassword(md5($_POST['oldpassword']))) {
 
                         $uid = $this->adminObj->getUserIdByname($_SESSION['admin_username']);
@@ -84,11 +87,12 @@ class AdminController
 
                         exit();
 
-                    } else {
-
-                        $passerror = "Incorrect password";
-
                     }
+
+                } catch(\Exception $e) {
+
+                    $passerror = $e->getMessage();
+                }
 
             } else {
 
@@ -102,6 +106,7 @@ class AdminController
 
     public function editUser() 
     {
+
         $uid = $_GET['userid'];
 
         $userObj = new User();
@@ -177,6 +182,7 @@ class AdminController
 
     public function enableUser()
     {
+        
         if (isset($_POST['enable'])) {
 
             $uid = $_POST['userid'];

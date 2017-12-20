@@ -22,8 +22,11 @@ class Validation
         foreach ($this->expectedInput as $key => $data )
         {
             if (in_array($data,$this->expectedInput)) {
+
                 if ( isset($this->inputData[$data]) &&  empty($this->inputData[$data]) ) {
-                    $this->errorMessage[$data] = $data." Required ";                       
+
+                    $this->errorMessage[$data] = $data." Required "; 
+
                     continue;
                 }
             }
@@ -38,6 +41,7 @@ class Validation
     public function validMobile($contact)
     {
         if (!preg_match("/^[9|7|8][0-9]{9}$/",$contact)) {
+
             return  " Invalid mobile number ";
         }
         
@@ -46,6 +50,7 @@ class Validation
     public function validName($name)
     {
         if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+
             return  "Only letter and whitespace allowed";
         }
         
@@ -54,6 +59,7 @@ class Validation
     public function validEmail($email)
     {
         if (!preg_match("/^[a-zA-Z0-9\_\.]*@(gmail|yahoo).com$/",$email)) {
+            
             return  " Invalid EmailId ";
         }
         

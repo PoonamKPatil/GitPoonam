@@ -196,7 +196,7 @@ class Person
             }
         }
 
-        return false;
+        throw new \Exception("Wrong password");
 
     }
 

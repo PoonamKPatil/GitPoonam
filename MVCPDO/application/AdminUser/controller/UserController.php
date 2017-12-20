@@ -14,6 +14,7 @@ class  UserController
     {
         $this->userObj = new User();
     }
+    
     public function loginValidation() 
     {
         if(isset($_POST['login'])) {

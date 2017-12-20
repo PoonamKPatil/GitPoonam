@@ -30,7 +30,7 @@ if ($userInfo['status']==0) : ?>
 <form method="POST" action="index.php?page=user">
 <input type="hidden" name="action" value="enable">
 <input type="hidden" name="userid" value="<?=$userInfo['uid'];?>">
-<input type="submit" name="enable" value="MakeEnable">
+<input type="submit" name="enable" value="Make Enable">
 </form>
 </td>
 
@@ -40,7 +40,7 @@ else :?>
 <form method="POST" action="index.php?page=user">
 <input type="hidden" name="action" value="disable">
 <input type="hidden" name="userid" value="<?=$userInfo['uid'];?>">
-<input type="submit" name="disable" value="MakeDisable">
+<input type="submit" name="disable" value="Make Disable">
 </form>
 </td>
 <?php endif; ?>
